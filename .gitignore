@@ -1,0 +1,87 @@
+backend/node_modules
+backend/package-lock.json
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend/coverage
+
+# production
+frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+node_modules
+# test
+backend/test/ts/*.js
+backend/.tap
+
+# coverage
+backend/overage
+backend/.nyc_output
+backend/legacy.js
+
+# yarn
+*.lock
+
+# php files
+index.php
+
+# Numerous always-ignore extensions
+*.bak
+*.patch
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+*.sass-cache
+
+
+# npm package
+*.tgz
+
+# OS or Editor folders
+.DS_Store
+._*
+backend/.cache
+backend/.project
+backend/.settings
+backend/.tmproj
+*.esproj
+*.sublime-project
+backend/nbproject
+backend/thumbs.db
+*.*-workspace
+
+# Folders to ignore
+backend/.hg
+backend/.svn
+backend/.CVS
+backend/.idea
+backend/old/
+*-old/
+*-notrack/
+backend/no-track/
+backend/build/
+backend/combo/
+backend/reference/
+backend/jscoverage_lib/
+backend/temp/

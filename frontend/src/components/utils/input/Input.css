@@ -1,0 +1,37 @@
+.input {
+    width: 400px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.p-input {
+    width: 250px;
+    border: none;
+    padding: 5px;
+    border: 1px solid rgb(163, 159, 159);
+    background-color: inherit;
+    /* border-radius: 10px; */
+}
+
+.p-input:focus {
+    outline: none;
+}
+
+.p-input:disabled {
+    /* background-color: #f7f5f5; */
+    border: none;
+}
+
+.p-label {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: medium;
+}
+
+.require {
+    color: red;
+}

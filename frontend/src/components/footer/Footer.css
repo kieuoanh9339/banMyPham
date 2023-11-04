@@ -1,0 +1,18 @@
+.footer {
+    background-color: rgb(231, 224, 224);
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.footer-copyright {
+    color: black;
+    padding: 20px;
+    font-size: 12px;
+    align-items: center;
+}
+

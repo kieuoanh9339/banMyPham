@@ -1,0 +1,214 @@
+header {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid gray;
+}
+
+.hotline {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(231, 224, 224);
+    padding: 10px 0;
+    align-items: center;
+    color: black;
+}
+
+.infor {
+    min-width: 70px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: end;
+    float: right;
+    align-items: center;
+    padding-top: 17px;
+}
+
+header .logo {
+    flex: 1;
+    width: 100%;
+    padding-top: 3px;
+    padding-left: 250px;
+}
+
+header .login-cart {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 50px;
+}
+
+header .login-cart a {
+    display: inline-block;
+    opacity: 0.7;
+    text-decoration: none;
+    color: black
+}
+
+.search,
+.login,
+.cart-icon {
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.login {
+    font-size: small;
+    display: flex;
+    align-items: center;
+}
+
+.logo-login {
+    padding: 0 3px;
+    cursor: pointer;
+}
+
+header a :hover {
+    opacity: 1;
+}
+
+.menu {
+    display: none;
+}
+
+.cart-icon {
+    position: relative;
+}
+
+.cart-icon span {
+    background: red;
+    border-radius: 20px;
+    color: wheat;
+    position: absolute;
+    top: -10px;
+    left: 30px;
+    padding: 3px 5px;
+    font-size: 10px;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    border: none;
+    margin-left: 5px;
+    border-bottom: 1px solid #000;
+    /* Tạo dấu gạch chân màu đen ở dưới */
+    outline: none;
+    width: 100px;
+    background: unset;
+}
+
+.search-icon {
+    cursor: pointer;
+}
+
+.navbar {
+    display: flex;
+    max-width: 1280px;
+    margin: 0px auto;
+    justify-items: center;
+    position: relative;
+}
+
+.skin-type,
+.category,
+.product {
+    padding: 10px 35px;
+    cursor: pointer;
+
+}
+.category {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.set-dropdown {
+    background: unset;
+}
+
+.dropbtn {
+    background: unset;
+    color: black;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style cho dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(248, 236, 219);
+    min-width: 160px;
+    z-index: 2;
+    margin-left: 30px;
+}
+
+/* Style cho mục trong dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 7px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Thay đổi màu sắc của mục khi hover */
+.dropdown-content a:hover {
+    text-decoration: underline;
+}
+
+/* Hiển thị dropdown content khi hover vào button */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-login {
+    position: fixed;
+    background-color:white;
+    min-width: 100px;
+    z-index: 3;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    /* Định kiểu viền và màu viền */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.dropdown li {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown li a {
+    color: #333;
+    text-align: left;
+}
+
+.dropdown li a:hover {
+    background-color: #ddd;
+}
+.islogin{
+    padding: 10px;
+}

@@ -1,0 +1,33 @@
+.payment{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.payment-filling{
+    width: 300px;
+    margin-top: 20px;
+}
+.payment-method-body {
+    background-color: white;
+    display: block;
+    align-items: center;
+
+}
+.cash, .payment-with-bank{
+    margin: 10px;
+}
+.btn-radio{
+    margin-right: 5px;
+}
+.total-price-ship{
+    width: 300px;
+}
+.payment-btn-checkout{
+    display: flex;
+    justify-content: center;
+}
+
+h4{
+    display: flex;
+    justify-content: center;
+}

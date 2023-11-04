@@ -1,0 +1,38 @@
+.login-form{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.btnLogin{
+    background-color: #000;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    margin: 20px 0;
+    padding: 10px 50px;
+    text-transform: capitalize;
+    width: 200px;
+    border-radius: 5px;
+}
+
+.acc-re{
+    margin-top: 10px;
+    font-size: 13px;
+    display: flex;
+}
+.login-email-err{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.error-email{
+    color: red;
+    padding-left: 140px;
+    font-size: 12px;
+}
