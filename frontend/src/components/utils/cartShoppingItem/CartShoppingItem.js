@@ -61,29 +61,33 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
         setQuantity(tmp);
 
     };
-    const Delete = async () => {
-        let check = 0
-        const res = await axios.delete("/carts", { ... deleteCart}, {
-            headers: { Authorization: token }
-        })
-        if (res.status == 400) {
-            alert(res.data.msg)
-            check=1
+    const deleteitem = async (quantity) => {
+        let check=0
+        const deleteCart = {
+            "product": cartItem.product._id
         }
-        if(res.status == 200 ){
+        const res = await axios.delete(`/carts/${cartItem.product._id}`)
+        console.log(res)
+        if(res.status === 'success' ){
+
             window.location.href = "/cart"
             alert("xoa thanh cong")
         }
-        
+        if (res.status === 400) {
+            alert(res.data.msg)
+            check=1
+        }
+
+
     }
     const onClickDelete = () => {
-        setCheckDelete(false)
+        deleteitem(0)
     }
 
     
     return (
         <div className="cart-item">
-            {isCart && <button class="delete-button" onClick={Delete}>Xóa</button>}
+            {isCart && <button class="delete-button" onClick={onClickDelete}>Xóa</button>}
             {!isCart ? (
                 <div
                     y
