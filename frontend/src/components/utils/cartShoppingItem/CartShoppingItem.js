@@ -12,30 +12,35 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
     const [checkDecrease, setCheckDecrease] = useState(quantity === 1 ? true : false)
     const [checkDelete, setCheckDelete] = useState(true)
     const [item,setItem]=useState({})
-    
+    const cart = {
+        "product": cartItem.product._id,
+        "quantity": quantity
+    }
 
+    const deleteCart = {
+        "product": cartItem.product._id
+    }
     const token = localStorage.getItem("token")
 
-    
 
-    const patchCart = async (quantity) => {
-        const cart = {
-            "product": cartItem.product._id,
-            "quantity": quantity
+    useEffect((quantity) => {
+        const patchCart = async () => {
+            
+            let check = 0
+            const res = await axios.patch("/carts", { ...cart }, {
+                headers: { Authorization: token }
+            })
+            if (res.status == 400) {
+                alert(res.data.msg)
+            }
+            
+            setItem(res.cart)
+            setSl(res.cart.totalPrice)
+            localStorage.setItem("amount",item.amount)
+            localStorage.setItem("totalPrice",item.totalPrice)
         }
-        let check = 0
-        const res = await axios.patch("/carts", { ...cart }, {
-            headers: { Authorization: token }
-        })
-        if (res.status == 400) {
-            alert(res.data.msg)
-        }
-        
-        setItem(res.cart)
-        setSl(res.cart.totalPrice)
-        localStorage.setItem("amount",item.amount)
-        localStorage.setItem("totalPrice",item.totalPrice)
-    }
+        patchCart()
+    }, [quantity])
     
     const handleClickInCrease = () => {
         if (quantity === 1) setCheckDecrease(true)
@@ -45,8 +50,6 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
             setCheckIncrease(true)
         }
         setQuantity(tmp);
-        patchCart(tmp)
-
     }
 
     const handleClickDecrease = () => {
@@ -56,36 +59,31 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
             setCheckDecrease(true)
         }
         setQuantity(tmp);
-        patchCart(tmp)
 
     };
-    const deleteitem = async (quantity) => {
-        let check=0
-        const deleteCart = {
-            "product": cartItem.product._id
-        }
-        const res = await axios.delete(`/carts/${cartItem.product._id}`)
-        console.log(res)
-        if(res.status === 'success' ){
-            
-            window.location.href = "/cart"
-            alert("xoa thanh cong")
-        }
-        if (res.status === 400) {
+    const Delete = async () => {
+        let check = 0
+        const res = await axios.delete("/carts", { ... deleteCart}, {
+            headers: { Authorization: token }
+        })
+        if (res.status == 400) {
             alert(res.data.msg)
             check=1
         }
-        
+        if(res.status == 200 ){
+            window.location.href = "/cart"
+            alert("xoa thanh cong")
+        }
         
     }
     const onClickDelete = () => {
-        deleteitem(0)
+        setCheckDelete(false)
     }
 
     
     return (
         <div className="cart-item">
-            {isCart && <button class="delete-button" onClick={onClickDelete}>Xóa</button>}
+            {isCart && <button class="delete-button" onClick={Delete}>Xóa</button>}
             {!isCart ? (
                 <div
                     y

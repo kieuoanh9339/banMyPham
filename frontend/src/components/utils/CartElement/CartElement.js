@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import "./CartElement.css";
 import { GlobalState } from "../../../GlobalState";
 import CartShoppingItem from "../cartShoppingItem/CartShoppingItem";
+import CartAPI from '../../../API/CartAPI'
 function CartElement({setSl}) {
-  const state = useContext(GlobalState)
-  const [cartItems] = state.cartAPI.cartItem
-  const [cart]= state.cartAPI.cart
+  // const state = useContext(GlobalState)
+  const cartAPI=CartAPI(localStorage.getItem("token"))
+  const [cartItems] = cartAPI.cartItem
+  const [cart] = cartAPI.cart
 
   return (
     <div className="cart-items">

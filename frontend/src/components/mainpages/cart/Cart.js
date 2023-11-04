@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import imgPayment from "../../header/icons/payment.webp"
 import CartElement from '../../utils/CartElement/CartElement';
 import { GlobalState } from '../../../GlobalState';
+import CartAPI from '../../../API/CartAPI'
 import "./Cart.css"
 function Cart() {
-  const state = useContext(GlobalState)
-  const [cart] = state.cartAPI.cart
+  const cartAPI=CartAPI(localStorage.getItem("token"))
+  const [cart] = cartAPI.cart
   console.log(cart.totalPrice)
   useEffect(()=>{
     

@@ -21,6 +21,7 @@ function CartAPI(token) {
                     }
                     setCart(res.cart)
                     setCartItem(res.cart.items)
+                    // localStorage.setItem("amount",cartItem.length)
                     setAmount(res.cart.items.length)
                     
 

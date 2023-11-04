@@ -5,12 +5,15 @@ import User from "./icons/user1.png"
 import Cart from "./icons/cart.png"
 import Paula from "./icons/paula.png"
 import Search from "./icons/search.png"
+import CartAPI from '../../API/CartAPI'
 import "./Header.css"
 function Header() {
+    const cartAPI=CartAPI(localStorage.getItem("token"))
+    const amount = cartAPI.amount
     const state = useContext(GlobalState)
     const [isLoggedIn, setIsLogin] = state.userAPI.isLogged
     const [isAdmin, setAdmin] = state.userAPI.isAdmin
-    const [amount, setAmount] = state.cartAPI.amount
+    // const [amount, setAmount] = state.cartAPI.amount
     const [isOpen, setIsOpen] = useState(false)
     const [token, setToken] = state.token
     const toggleDropdown = () => {
@@ -37,9 +40,9 @@ function Header() {
             </div>
             <div className='infor'>
                 <div className='logo' >
-                    <Link to="/">
+                    <a href="/">
                         <img src={Paula} alt="" />
-                    </Link>
+                    </a>
                 </div>
 
 
