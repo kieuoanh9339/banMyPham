@@ -4,6 +4,7 @@ import { set } from "mongoose"
 
 function CategoryAPI() {
     const [category, setCategory] = useState([])
+    const [callback, setCallback] = useState(false)
     useEffect(() => {
         
             const getCategory = async () => {
@@ -18,9 +19,10 @@ function CategoryAPI() {
             }
             getCategory()
 
-    }, [])
+    }, [callback])
     return {
-        category: [category, setCategory]
+        category: [category, setCategory],
+        callback:[callback,setCallback]
     }
 }
 

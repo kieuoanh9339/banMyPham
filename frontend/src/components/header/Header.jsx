@@ -19,7 +19,7 @@ function Header() {
     const [token, setToken] = state.token
     const categoryAPI = CategoryAPI(localStorage.getItem("token"))
     const [categories]= categoryAPI.category//mảng cac category
-    console.log(categories)
+
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };

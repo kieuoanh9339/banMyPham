@@ -38,8 +38,11 @@ const categorCtrl = {
     updateCategory: async (req,res) => {
         try{
             const {name} = req.body
+            if(name.trim().length===0){
+                return res.status(400).json({msg:"This field is the required field"})
+            }
             await Category.findOneAndUpdate({_id:req.params.id},{name})
-            res.status(200).json({msg:"Update successfully"})
+            return res.status(200).json({msg:"Update successfully"})
         }catch(err){
             return res.status(500).json({msg:err.message})
         }
