@@ -137,7 +137,7 @@ module.exports = {
     deleteItemProductInCart: async (req, res) => {
         try {
             const product = req.params.id;
-            console.log(req)
+            // console.log(req)
             const userId = req.user.id;
             const activeCart = await Cart.findOne({ $and: [{ userId: userId }, { status: "active" }] });
             const index = activeCart.items.findIndex((e) => e.product == product);

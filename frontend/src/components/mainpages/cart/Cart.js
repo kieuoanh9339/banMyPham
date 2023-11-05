@@ -9,7 +9,7 @@ import "./Cart.css"
 function Cart() {
   const cartAPI=CartAPI(localStorage.getItem("token"))
   const [cart] = cartAPI.cart
-  console.log(cart.totalPrice)
+  console.log(cart)
   useEffect(()=>{
     
   })

@@ -6,20 +6,24 @@ import Cart from "./icons/cart.png"
 import Paula from "./icons/paula.png"
 import Search from "./icons/search.png"
 import CartAPI from '../../API/CartAPI'
+import CategoryAPI from '../../API/CategoryAPI'
 import "./Header.css"
+
 function Header() {
-    const cartAPI=CartAPI(localStorage.getItem("token"))
-    const amount = cartAPI.amount
     const state = useContext(GlobalState)
+    const cartAPI = CartAPI(localStorage.getItem("token"))
+    const amount = cartAPI.amount//so san pham trong gio
     const [isLoggedIn, setIsLogin] = state.userAPI.isLogged
     const [isAdmin, setAdmin] = state.userAPI.isAdmin
-    // const [amount, setAmount] = state.cartAPI.amount
     const [isOpen, setIsOpen] = useState(false)
     const [token, setToken] = state.token
+    const categoryAPI = CategoryAPI(localStorage.getItem("token"))
+    const [categories]= categoryAPI.category//mảng cac category
+    console.log(categories)
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
-    // console.log(isAdmin)
+
     const LogOut = () => {
         setIsOpen(!isOpen);
         localStorage.clear()
@@ -32,7 +36,8 @@ function Header() {
     const displayAlert = () => {
         alert("You should login")
     }
-    // const value= useContext(GlobalState)
+
+    const skinType=["Normal skin","Oily skin","Dry skin", "Combination skin"]
     return (
         <header>
             <div className='hotline'>
@@ -85,7 +90,7 @@ function Header() {
                         {
                             token ? <Link to="/cart">
                                 <img src={Cart} alt="" width="30" />
-                            </Link> :  <img src={Cart} alt="" width="30"  onClick={displayAlert}/>
+                            </Link> : <img src={Cart} alt="" width="30" onClick={displayAlert} />
                         }
 
                     </div>
@@ -94,19 +99,24 @@ function Header() {
             <div className='navbar'>
                 <div className='category'>
                     {
-                        !isAdmin ? (<Link to="/product">
+                        !isAdmin ? (
                             <div class="dropdown">
                                 <div class="dropbtn">Category</div>
                                 {
-                                    !isAdmin ? (<div class="dropdown-content">
-                                        <a>Normal skin</a>
-                                        <a>Oily skin</a>
-                                        <a>Dry skin</a>
-                                        <a>Combination skin</a>
+                                    !isAdmin ? (<div>
+                                            <div class="dropdown-content">
+                                            {categories.map(e => {
+                                                return <Link to="/product">
+                                                     <a>{e.name}</a>
+                                                </Link>
+                                            })}
+                                            </div>
+                                        
                                     </div>) : (<></>)
                                 }
+
                             </div>
-                        </Link>) : (
+                        ) : (
                             <Link to="/create-category">
                                 <div className='dropdown'>
                                     <div className='dropbtn'>Category</div>
@@ -122,19 +132,22 @@ function Header() {
                 </div>
                 {
                     !isAdmin ? (<div className='skin-type' >
-                        <Link to="/product">
-
+                        
                             <div class="dropdown">
                                 <button class="dropbtn">Skin Type</button>
-                                <div class="dropdown-content">
-                                    <a>Normal skin</a>
-                                    <a>Oily skin</a>
-                                    <a>Dry skin</a>
-                                    <a>Combination skin</a>
-                                </div>
+                                {
+                                    !isAdmin ? (<div>
+                                            <div class="dropdown-content">
+                                            {skinType.map(e => {
+                                                return <Link to="/product">
+                                                     <a>{e}</a>
+                                                </Link>
+                                            })}
+                                            </div>
+                                        
+                                    </div>) : (<></>)
+                                }
                             </div>
-
-                        </Link>
                     </div>) : (<></>)
                 }
 

@@ -5,7 +5,7 @@ const categorCtrl = {
     getCategories: async (req,res) => {
         try{
             const categories = await Category.find()
-            res.json(categories)
+            res.json({category:categories})
         }catch(err){
             return res.status(500).json({msg:err.message})
         }
