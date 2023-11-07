@@ -38,7 +38,7 @@ const productSchema = new mongoose.Schema({
     },
     skinType:{
         type: String,
-        default: 0,
+        default: "",
     },
  },{
     timestamps:true

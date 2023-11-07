@@ -24,7 +24,7 @@ router.post('/upload',auth,authAdmin, (req,res) => {
             return res.status(400).json({msg:"Size is too large"})
         }
         
-        if(file1.mimetype!=='image/jpg' && file1.mimetype !== 'image/png'){
+        if(file1.mimetype!=='image/jpeg' &&file1.mimetype!=='image/jpg' && file1.mimetype !== 'image/png'){
             removeTemp(file1.tempFilePath)
             return res.status(400).json({msg:"File format is incorrect"})
         }
