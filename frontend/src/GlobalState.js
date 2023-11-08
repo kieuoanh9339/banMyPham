@@ -9,6 +9,7 @@ export const GlobalState = createContext()
 
 export const DataProvider = ({ children }) => {
     const [token, setToken] = useState(false)
+    // const  = [ "Normal skin", "Dry Skin" , "Oily Skin", "Combination Skin"]
     // setToken(localStorage.getItem("refreshtoken"))
     // console.log(localStorage.getItem("refreshtoken"))
     // const refreshToken = async () => {

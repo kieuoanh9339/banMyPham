@@ -40,12 +40,12 @@ router.post('/upload',auth,authAdmin, (req,res) => {
 
 router.post('/destroy',auth, authAdmin ,(req,res) => {
     try{
-        const {product_id} = req.body
-        if(!product_id){
+        const {public_id} = req.body
+        if(!public_id){
             return res.status(400).json({msg:"No image selected"})
         }
 
-        cloudinary.v2.uploader.destroy(product_id,async(err,result) => {
+        cloudinary.v2.uploader.destroy(public_id,async(err,result) => {
             if(err) throw err
 
             res.json({msg:"Delete image successfully"})

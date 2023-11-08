@@ -6,19 +6,19 @@ import { useState } from "react";
 import axios from "../../../API/AxiosConfig"
 function CartShoppingItem({ cartItem, isCart,setSl }) {
     console.log(cartItem)
-    const inventory = cartItem.product.inventory
-    const [quantity, setQuantity] = useState(cartItem.amount)
+    const inventory = cartItem?.product?.inventory
+    const [quantity, setQuantity] = useState(cartItem?.amount)
     const [checkIncrease, setCheckIncrease] = useState(quantity === inventory ? true : false)
     const [checkDecrease, setCheckDecrease] = useState(quantity === 1 ? true : false)
     const [checkDelete, setCheckDelete] = useState(true)
     const [item,setItem]=useState({})
     const cart = {
-        "product": cartItem.product._id,
+        "product": cartItem?.product?._id,
         "quantity": quantity
     }
 
     const deleteCart = {
-        "product": cartItem.product._id
+        "product": cartItem?.product?._id
     }
     const token = localStorage.getItem("token")
 
@@ -35,9 +35,9 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
             }
             
             setItem(res.cart)
-            setSl(res.cart.totalPrice)
-            localStorage.setItem("amount",item.amount)
-            localStorage.setItem("totalPrice",item.totalPrice)
+            setSl(res.cart?.totalPrice)
+            localStorage.setItem("amount",item?.amount)
+            localStorage.setItem("totalPrice",item?.totalPrice)
         }
         patchCart()
     }, [quantity])
@@ -64,9 +64,9 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
     const deleteitem = async (quantity) => {
         let check=0
         const deleteCart = {
-            "product": cartItem.product._id
+            "product": cartItem?.product?._id
         }
-        const res = await axios.delete(`/carts/${cartItem.product._id}`)
+        const res = await axios.delete(`/carts/${cartItem?.product?._id}`)
         console.log(res)
         if(res.status === 'success' ){
 
@@ -105,14 +105,14 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
             )}
             <div className='cart-item-infor'>
                 <div className="cart-item-selected">
-                    <p className="cart-item-des">{cartItem.product.product_name}</p>
+                    <p className="cart-item-des">{cartItem?.product?.product_name}</p>
                     <p className="cart-item-size">
-                        {cartItem.product.category}
+                        {cartItem?.product?.category}
                     </p>
                 </div>
                 <div className='cart-item-select'>
                     <div className="cart-item-price">
-                        <p style={{ marginRight: "10px" }}>${cartItem.product.price}</p>
+                        <p style={{ marginRight: "10px" }}>${cartItem?.product?.price}</p>
                         {!isCart && (
                             <p> <i style={{ marginRight: "5px" }}>x</i> 11</p>
                         )}

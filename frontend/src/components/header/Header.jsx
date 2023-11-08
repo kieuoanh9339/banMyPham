@@ -6,6 +6,7 @@ import Cart from "./icons/cart.png"
 import Paula from "./icons/paula.png"
 import Search from "./icons/search.png"
 import CartAPI from '../../API/CartAPI'
+import ProductAPI from '../../API/ProductAPI'
 import CategoryAPI from '../../API/CategoryAPI'
 import "./Header.css"
 
@@ -20,6 +21,7 @@ function Header() {
     const categoryAPI = CategoryAPI(localStorage.getItem("token"))
     const [categories]= categoryAPI.category//mảng cac category
 
+    const [category,setCategory]=state.productAPI.category
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
@@ -106,9 +108,10 @@ function Header() {
                                     !isAdmin ? (<div>
                                             <div class="dropdown-content">
                                             {categories.map(e => {
-                                                return <Link to="/product">
-                                                     <a>{e.name}</a>
+                                                return <Link to="/product" onClick={() => {setCategory(e.name)}} >
+                                                     <a>{e.name}</a> 
                                                 </Link>
+                                                
                                             })}
                                             </div>
                                         

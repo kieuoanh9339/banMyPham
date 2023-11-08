@@ -12,8 +12,7 @@ function CreateProduct() {
         inventory: 0,
         desc: "",
         category: "",
-        skinType: "",
-        _id: ""
+        skinType: ""
 
     })
     const state = useContext(GlobalState)
@@ -22,13 +21,77 @@ function CreateProduct() {
     const [isAdmin] = state.userAPI.isAdmin
     const [token] = state.token
     const navigate = useNavigate()
+    // navigate('/home');
     const param = useParams()
     const [products, setProducts] = state.productAPI.products
     const [onEdit, setOnEdit] = useState(false)
+    const [callback,setCallback]=state.productAPI.callback
+    useEffect(()=>{
+        if(param.id){
+            setOnEdit(true)
+            products.forEach(product => {
+                if(product._id === param.id) {
+                    setProduct(product) 
+                    setImages(product.images)
+                }
+            })
+            
+        }else{
+            setOnEdit(false)
+            setImages(false)
+            setProduct({
+                product_name: "",
+                price: 0,
+                inventory: 0,
+                desc: "",
+                category: "",
+                skinType: ""
+        
+            })
+        }
+    },[param.id])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            if(!isAdmin) return alert("you are not Admin")
+            if(!images) return alert("no image found")
+            if(onEdit) {
+                const res = await axios.put(`/product/${product._id}`, {...product, images}, {
+                    headers: {Authorization : token}
+                })
+                console.log(res)
+                if(res.status===400){
+                    alert(res.data)
+                }else alert(res.message)
+            }else {
+                const res = await axios.post('/product', {...product, images}, {
+                    headers: {Authorization : token}
+                })
+                console.log(res)
+            }
+            
+            setImages(false)
+            setProduct({
+                product_name: "",
+                price: 0,
+                inventory: 0,
+                desc: "",
+                category: "",
+                skinType: ""
+        
+            })
+            setCallback(!callback)
+            navigate('/product')
+        } catch (err) {
+            alert(err.response.data.msg)
+        }
+    }
 
     const onChangeInput = (name, value) => {
         setProduct({ ...product, [name]: value })// sao chép tất cả thuộc tính của đối tượng product hiện có va update thuoc tinh name = value
     }
+    console.log(product)
 
     const styleUpload = {
         display: images ? 'block' : 'none'
@@ -52,9 +115,22 @@ function CreateProduct() {
             setImages(res)
     
         } catch (err) {
-            alert(err.response.data.msg)
+            alert(err.response.msg)
         }
     }
+
+    const handleDestroy = async (e) => {
+        try {
+            if(!isAdmin) return alert('you are not an admin');
+            await axios.post('/destroy', {public_id: images.public_id},{
+                headers: {Authorization : token}
+            })
+            setImages(false)
+    
+        } catch (err) {
+            alert(err.response.msg)
+        }
+    } 
 
     const skin_type = [{ name: "Normal skin" }, { name: "Dry Skin" }, { name: "Oily Skin" }]
 
@@ -64,7 +140,7 @@ function CreateProduct() {
                 <input type="file" name="file" id="file_up" onChange={handleUpload}/>
                 <div id="file_img" style={styleUpload}>
                     <img src={images ? images.url : ''} alt="" />
-                    <span >x</span>
+                    <span onClick={handleDestroy} >x</span>
                 </div>
             </div>
             <form>
@@ -76,12 +152,12 @@ function CreateProduct() {
 
                 <div className="create-product-price">
                     <label htmlFor="price">Price</label>
-                    <input className="create-input" type="number" value={product.price} onChange={(e) => onChangeInput("price", e.target.value)}
+                    <input className="create-input" type="number" value={product.price} onChange={(e) => onChangeInput("price", parseInt(e.target.value))}
                     />
                 </div>
                 <div className="create-product-price">
                     <label htmlFor="price">Inventory</label>
-                    <input className="create-input" type="number" value={product.inventory} onChange={(e) => onChangeInput("inventory", e.target.value)}
+                    <input className="create-input" type="number" value={product.inventory} onChange={(e) => onChangeInput("inventory", parseInt(e.target.value))}
                     />
                 </div>
 
@@ -118,7 +194,7 @@ function CreateProduct() {
                         }
                     </select>
                 </div>
-                <button type="submit"> {onEdit ? "Edit Product" : "Create Product"}</button>
+                <button onClick={handleSubmit}> {onEdit ? "Edit Product" : "Create Product"}</button>
             </form>
 
         </div>

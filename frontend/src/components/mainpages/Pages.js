@@ -27,6 +27,7 @@ function Pages(){
             <Route path='/cart-item' exact Component={CartElement}/>
             <Route path='/product/:id' exact Component={ProductDetail}/>
             <Route path='/create-product' exact Component={CreateProduct}/>
+            <Route path='/edit_product/:id' exact Component={CreateProduct}/>
             <Route path='/create-category' exact Component={CreateCategory}/>
             <Route path='/my-order' exact Component={MyOrder}/>
             <Route path='/checkout' exact Component={Payment}/>

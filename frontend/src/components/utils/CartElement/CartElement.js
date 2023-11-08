@@ -13,7 +13,7 @@ function CartElement({setSl}) {
     <div className="cart-items">
       <div className="cart-item-list">
         {
-          cartItems.map(cartItem => {
+          cartItems?.map(cartItem => {
             return <CartShoppingItem key={cartItem._id} cartItem={cartItem} isCart={cart.status==="active"? true : false } isPatch={false} setSl={setSl}/>
           })
         }

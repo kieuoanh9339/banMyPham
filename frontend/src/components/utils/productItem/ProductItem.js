@@ -1,11 +1,29 @@
 import React, { useContext, useState } from 'react'
 import item1 from '../../header/icons/item1.jpg'
+import axios from '../../../API/AxiosConfig'
 import { Link } from 'react-router-dom'
+import {useNavigate, useParams} from "react-router-dom"
 import { GlobalState } from '../../../GlobalState'
 import "./ProductItem.css"
 function ProductItem({ product, isAdmin }) {
     // const state = useContext(GlobalState)
     // const [isAdmin, setIsAdmin]= state.userAPI.IsAdmin
+    const token= localStorage.getItem("token")
+    const navigate = useNavigate()
+    const deleteProduct = async()=> {
+        try {
+                    const destroyImg = await axios.post(`/destroy`, {public_id: product.images.public_id},{
+                        headers: {Authorization: token}
+                    })
+                    const deleteProduct =await axios.delete(`/product/${product._id}`,{
+                        headers: {Authorization: token}
+                    })
+                    alert(deleteProduct.msg)
+                    window.location.href = "/product"
+                } catch (err) {
+                    alert(err.response.data.msg)
+                }
+    }
     return (
         <div className='productItem'>
 
@@ -35,7 +53,7 @@ function ProductItem({ product, isAdmin }) {
                                 </div>
                             </Link>
                             <div>
-                                <button className='btnDel'>
+                                <button className='btnDel' onClick={()=>deleteProduct(product._id, product.images.public_id)}>
                                     DELETE
                                 </button>
                             </div>

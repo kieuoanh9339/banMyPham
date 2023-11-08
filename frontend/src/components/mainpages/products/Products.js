@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { GlobalState } from '../../../GlobalState'
 import ProductAPI from '../../../API/ProductAPI'
@@ -8,8 +8,11 @@ function Products() {
     const state = useContext(GlobalState)
     const [isAdmin] = state.userAPI.isAdmin
     const [products] = state.productAPI.products
+    const [category] = state.productAPI.category
     const token=localStorage.getItem("token")
-    console.log(token);
+
+    console.log(products)
+    console.log(products)
     
     return (
         <div className='products'>
@@ -27,7 +30,7 @@ function Products() {
 
             <div className='list-products'>
                 {
-                    products.map(product => {
+                    products?.map(product => {
                         return <ProductItem key={product._id} product={product} isAdmin={isAdmin}/>
                     })
                 }
