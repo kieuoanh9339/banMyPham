@@ -1,8 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./MyProfile.css";
 import Input from "../../utils/input/Input";
-import { Link } from "react-router-dom";
+import { GlobalState } from "../../../GlobalState";
+
+import axios from "../../../API/AxiosConfig";
+import { Link, useNavigate } from "react-router-dom";
 function MyProfile() {
+    const state= useContext(GlobalState)
+    const [user, setUser]= state.userAPI.user
+    const navigate= useNavigate()
+    const [check, setCheck]=useState(false)
+    const onChangeInput = (name, value) => {
+        setUser({ ...user, [name]: value })// sao chép tất cả thuộc tính của đối tượng user hiện có va update thuoc tinh name = value
+    }
+
+
+    const onClickSubmit = async (e) => {
+        e.preventDefault()
+        const res = await axios.put("user/updateUser", { ...user })
+        alert(res.message)
+        navigate("/")
+    }   
+
+   
 
     return (
         <div className="profile">
@@ -14,26 +34,28 @@ function MyProfile() {
                     <Input
                         label="email"
                         type="text"
-                        value={"comtrang7@gmail.com"}
+                        value={user.email}
                         disabled={true}
                     />
                     <Input
                         label="fullname"
                         type="text"
-                        value={"oanh oanh"}
-
+                        value={user.fullname}
+                        onChange={(e) => onChangeInput("fullname", e.target.value)}
                     />
                     <Input
                         label="phone number"
                         type="text"
-                        value={"08779999856"}
+                        value={user.phonenumber}
+                        onChange={(e) => onChangeInput("phonenumber", e.target.value)}
                     />
                     <Input
                         label="Address"
                         type="text"
-                        value={"ha noi me tri"}
+                        value={user.address}
+                        onChange={(e) => onChangeInput("address", e.target.value)}
                     />
-                    <div className="forget-password">
+                    <div className="forget-password"  >
                         Change Password
                     </div>
                 </div>
@@ -41,7 +63,7 @@ function MyProfile() {
             </div>
 
             <div className="style-btsave">
-            <button className='btnSave'>
+            <button className='btnSave' onClick={(e) => onClickSubmit(e)}>
                 SAVE
             </button>
             </div>

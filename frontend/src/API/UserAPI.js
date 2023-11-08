@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 import axios from "../API/AxiosConfig"
-import { set } from "mongoose"
 
 function UserAPI(token) {
     const [isLogged, setIsLogged] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
+    const [user, setUser]=useState({})
 
     useEffect(() => {
         if (token) {
@@ -13,6 +13,7 @@ function UserAPI(token) {
                     const res = await axios.get('/user/infor', {
                         headers: { Authorization: token }
                     })
+                    setUser(res)
                     res.role === "1" ? setIsAdmin(true) : setIsAdmin(false)
                     setIsLogged(true)
                     if (res.data.msg === "Phiên đã hết hạn") {
@@ -20,7 +21,7 @@ function UserAPI(token) {
                         window.location.href = ("/login")
                         localStorage.clear()
                     }
-
+                    
                 } catch (err) {
                     // console.log(err.response)
                     // alert(err)
@@ -32,7 +33,8 @@ function UserAPI(token) {
 
     return {
         isLogged: [isLogged, setIsLogged],
-        isAdmin: [isAdmin, setIsAdmin]
+        isAdmin: [isAdmin, setIsAdmin],
+        user: [user, setUser]
     }
 }
 
