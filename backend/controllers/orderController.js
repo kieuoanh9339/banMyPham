@@ -44,7 +44,8 @@ module.exports = {
         try {
             const userId = req.user.id;
             const cartId = req.body.cart;
-            const newOrder = await Order.create({ user: userId, cart: cartId })
+            const process= req.body
+            const newOrder = await Order.create({ process: process, user: userId, cart: cartId })
             console.log(newOrder);
             const order = await Order.findById(newOrder._id).populate("cart")
                 .populate("user");

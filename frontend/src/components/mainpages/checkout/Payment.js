@@ -1,8 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { GlobalState } from "../../../GlobalState";
+import CartAPI from "../../../API/CartAPI";
+import axios from "../../../API/AxiosConfig";
 import "./Payment.css"
 
-import Input from "../../utils/input/Input";
 function Payment() {
+    const state = useContext(GlobalState)
+    const [user, setUser] = state.userAPI.user
+    const cartAPI = CartAPI(localStorage.getItem("token"))
+    const [cart, setCart] = cartAPI.cart
+    let check = ''
+    console.log(cart)
+    const payment = {
+        userId: user._id,
+        cartId: cart._id,
+        process: "Thanh toán tiền mặt"
+    }
+
+    const checkProcessCash = () => {
+        check = true
+        console.log(check)
+    }
+    const checkProcessCard = () => {
+        check = false
+        console.log(check)
+    }
+
+    const createOrder = async (e) => {
+        try {
+            if (check === true) {
+                let checkout = false
+                const res1 = await axios.get(`/carts/${cart._id }/checkout`)
+                console.log(res1)
+                if (res1.status === 'success') {
+                    checkout = true
+                }
+                if (checkout) {
+                    const res = await axios.post("orders", { ...payment })
+                    alert(res.msg)
+                    window.location.href= "/"
+                }
+            }
+        } catch (e) {
+            alert(e.message)
+        }
+    }
+
     return (
         <div className="payment">
             <div className="payment-filling">
@@ -21,7 +64,7 @@ function Payment() {
                                 type={"text"}
                                 className="p-input"
                                 disabled={true}
-                                value={"Ngo Oanh"}
+                                value={user.fullname}
                             />
                         </div>
                         <div className="input">
@@ -36,7 +79,7 @@ function Payment() {
                                 type={"text"}
                                 className="p-input"
                                 disabled={true}
-                                value={"0868799856"}
+                                value={user.phonenumber}
                             />
                         </div>
                         <div className="input">
@@ -51,7 +94,7 @@ function Payment() {
                                 type={"text"}
                                 className="p-input"
                                 disabled={true}
-                                value={"Tran Phu Ha Dong"}
+                                value={user.address}
                             />
                         </div>
                     </div>
@@ -60,37 +103,53 @@ function Payment() {
                     <h4 className="payment-title">Payment method</h4>
                     <form className="payment-method-body">
                         <div className="cash">
-                            <input className="btn-radio" type="radio" id="option1" name="options" value="option1" autoFocus={true} />
-                            <label for="option1">Cash</label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="cash"
+                                    value="cash"
+                                    onClick={checkProcessCash}
+                                />
+                                Cash
+                            </label>
                         </div>
                         <div className="payment-with-bank">
-                            <input className="btn-radio" type="radio" id="option1" name="options" value="option1" />
-                            <label for="option1">Payment via ATM-Domestic bank account</label>
-                        </div>
-                        <div className="total-price-ship">
-                            <h4>Total order</h4>
-                            <div className="cart-subtotal">
-                                <div className='label-subtotal'><p>Subtotal:</p></div>
-                                <div className='subTotal'><p>$35.0</p></div>
-                            </div>
-                            <div className="cart-shipping">
-                                <div className='label-subtotal'><p>Shipping:</p></div>
-                                <div className='subTotal'><p>$0</p></div>
-                            </div>
-                            <div className="cart-est-total">
-                                <div className='label-subtotal'><p>EST.TOTAL:</p></div>
-                                <div className='subTotal'><p>$35.0</p></div>
-                            </div>
-                        </div>
 
-                        <div className="payment-btn-checkout">
-                            <button className='btnCheckout-detail'>
-                                CHECKOUT
-                            </button>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="cash"
+                                    value="VNBANK"
+                                    onClick={checkProcessCard}
+                                />
+                                Payment via ATM-Domestic bank account
+                            </label>
                         </div>
-
 
                     </form>
+                    <div className="total-price-ship">
+                        <h4>Total order</h4>
+                        <div className="cart-subtotal">
+                            <div className='label-subtotal'><p>Subtotal:</p></div>
+                            <div className='subTotal'><p>${cart.totalPrice}</p></div>
+                        </div>
+                        <div className="cart-shipping">
+                            <div className='label-subtotal'><p>Shipping:</p></div>
+                            <div className='subTotal'><p>$0</p></div>
+                        </div>
+                        <div className="cart-est-total">
+                            <div className='label-subtotal'><p>EST.TOTAL:</p></div>
+                            <div className='subTotal'><p>${cart.totalPrice}</p></div>
+                        </div>
+                    </div>
+
+                    <div className="payment-btn-checkout">
+                        <button className='btnCheckout-detail' onClick={(e) => createOrder(e)}>
+                            CHECKOUT
+                        </button>
+                    </div>
+
+
                 </div>
             </div>
         </div>

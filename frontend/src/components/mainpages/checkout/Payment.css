@@ -31,3 +31,6 @@ h4{
     display: flex;
     justify-content: center;
 }
+.payment-infor-user .input{
+    font-weight: 600;
+}

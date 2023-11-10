@@ -26,7 +26,7 @@ function Login() {
             // console.log(localStorage.getItem('firstLogin'))
         } else {
             localStorage.setItem("firstLogin", true)
-            window.location.href = "https://www.facebook.com/"
+            window.location.href = "/"
             localStorage.setItem("token",res.accessToken)
         }
 

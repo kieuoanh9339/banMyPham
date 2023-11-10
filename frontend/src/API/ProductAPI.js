@@ -15,7 +15,7 @@ function ProductAPI() {
             const res = await axios.get(`/product?category=${category}&skinType=${skinType}`)
 
             setProducts(res.products)
-            const res2 = await axios.get(`/product?limit=2`)
+            const res2 = await axios.get(`/product?limit=5`)
 
             setNewProduct(res2.products)
         }

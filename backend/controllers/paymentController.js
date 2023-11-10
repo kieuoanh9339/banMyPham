@@ -175,3 +175,4 @@ const sortObject = (obj) => {
     }
     return sorted;
 }
+module.exports = paymentController

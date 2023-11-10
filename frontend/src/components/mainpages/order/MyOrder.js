@@ -1,8 +1,7 @@
 import React from 'react'
 import CartShoppingItem from '../../utils/cartShoppingItem/CartShoppingItem'
 import "./MyOrder.css"
-function MyOrder(props) {
-    const { orders } = props
+function MyOrder() {
     return (
         <div className='my-order'>
             <div className='my-order-element'>

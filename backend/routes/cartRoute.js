@@ -10,6 +10,7 @@ router.route('')
 
 router.route('/:id/checkout')
 .get(auth, cartCtrl.checkoutCart)
+
 router.route('/:id')
 .delete(auth, cartCtrl.deleteItemProductInCart)
 module.exports = router;
