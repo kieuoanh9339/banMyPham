@@ -44,6 +44,7 @@ module.exports = {
                     return res.status(400).json({ msg: `Not enough product` });
                 }
                 const cart = { userId: userId, status: "active", items: [{ product: req.body.product, amount: quantity }], totalPrice: _product.price * quantity };
+                
                 activeCart = await Cart.create(cart);
             }
 
@@ -68,6 +69,20 @@ module.exports = {
             res.status(200).json({
                 status: "success",
                 cart: activeCart,
+            });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    getCartByID: async (req, res) => {
+        try {
+            const cartId = req.params.id;
+            let cart = await Cart.findById(cartId)
+                .populate({ path: "items", populate: { path: "product", select: selectProduct } });
+            
+            res.status(200).json({
+                status: "success",
+                cart: cart,
             });
         } catch (err) {
             return res.status(500).json({ msg: err.message })

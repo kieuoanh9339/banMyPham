@@ -6,10 +6,10 @@ const authAdmin= require('../middlewares/authAdmin')
 
 router.route('/product')
 .get(productCtrl.getAll)
-.post(productCtrl.createProduct)
+.post(auth,authAdmin,productCtrl.createProduct)
 
 router.route('/product/:id')
-.delete(productCtrl.deleteProduct)
-.put(productCtrl.updateProduct)
+.delete(auth,authAdmin,productCtrl.deleteProduct)
+.put(auth,authAdmin,productCtrl.updateProduct)
 
 module.exports = router;

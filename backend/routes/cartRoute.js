@@ -8,9 +8,14 @@ router.route('')
 .post(auth, cartCtrl.addToCart)
 .patch(auth, cartCtrl.patchProductQuantity)
 
+// router.route('/cartId')
+// .get(auth, cartCtrl.getCartByID)
+
 router.route('/:id/checkout')
 .get(auth, cartCtrl.checkoutCart)
 
 router.route('/:id')
 .delete(auth, cartCtrl.deleteItemProductInCart)
+.get(auth, cartCtrl.getCartByID)
+
 module.exports = router;

@@ -4,85 +4,93 @@ import './OrderItem.css'
 import Anh1 from "../../header/icons/paulaTim.jpg"
 import { useState } from "react";
 import axios from "../../../API/AxiosConfig"
-function OrderItem({ cartItem, isCart, setSl }) {
-    console.log(cartItem)
-    const inventory = cartItem?.product?.inventory
-    const [quantity, setQuantity] = useState(cartItem?.amount)
-    const [checkIncrease, setCheckIncrease] = useState(quantity === inventory ? true : false)
-    const [checkDecrease, setCheckDecrease] = useState(quantity === 1 ? true : false)
-    const [checkDelete, setCheckDelete] = useState(true)
-    const [item, setItem] = useState({})
-    const cart = {
-        "product": cartItem?.product?._id,
-        "quantity": quantity
-    }
+function OrderItem({ order }) {
+    const [status, setStatus] = useState("")
+    const { items } = order.cart
+    const [price, setPrice] = useState(0)
+    const [cartItem, setCartItem] = useState([])
 
-    const deleteCart = {
-        "product": cartItem?.product?._id
-    }
-    const token = localStorage.getItem("token")
+    // Chuyển đổi ngày tạo thành đối tượng Date
+    const createdDate = new Date(order.createdAt);
+
+    // Format ngày tháng theo dạng "DD/MM/YYYY"
+    const formattedDate = `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`;
 
 
-    useEffect((quantity) => {
-        const patchCart = async () => {
+    useEffect(() => {
+        if (order.status === "00") {
+            setStatus("Chờ xử lý")
+        } else if (order.status === "10" || order.status === "01") {
+            setStatus("Đã huỷ")
+        } else {
+            setStatus("Chờ nhận hàng")
+        }
 
-            let check = 0
-            const res = await axios.patch("/carts", { ...cart }, {
-                headers: { Authorization: token }
-            })
-            if (res.status == 400) {
-                alert(res.data.msg)
+        const getOrderItem = async (e) => {
+            try {
+                const res = await axios.get(`/carts/${order.cart._id}`)
+                console.log(res)
+                setPrice(res.cart.totalPrice)
+                setCartItem(res.cart.items)
+                console.log(cartItem)
+            } catch (e) {
+                alert(e.message)
             }
-
-            setItem(res.cart)
-            setSl(res.cart?.totalPrice)
-            localStorage.setItem("amount", item?.amount)
-            localStorage.setItem("totalPrice", item?.totalPrice)
         }
-        patchCart()
-    }, [quantity])
+        getOrderItem()
+    }, [])
 
-    const handleClickInCrease = () => {
-        if (quantity === 1) setCheckDecrease(true)
-        const tmp = quantity + 1;
-        if (tmp >= 1) setCheckDecrease(false)
-        if (tmp == inventory) {
-            setCheckIncrease(true)
-        }
-        setQuantity(tmp);
-    }
 
-    const handleClickDecrease = () => {
-        const tmp = quantity - 1;
-        if (tmp <= inventory) setCheckIncrease(false)
-        if (tmp <= 1) {
-            setCheckDecrease(true)
-        }
-        setQuantity(tmp);
-
-    };
 
     return (
-        <div className="cart-item">
-            <div
-                y
-                style={{ textDecoration: "none" }}
-            >
-                <img src={Anh1} className="cart-item-img" />
-            </div>
-            <div className='cart-item-infor'>
-                <div className="cart-item-selected">
-                    <p className="cart-item-des">{cartItem?.product?.product_name}</p>
-                    <p className="cart-item-size">
-                        {cartItem?.product?.category}
-                    </p>
+        <div className='my-order-element'>
+            <div className='date-status'>
+                <div className='date-ordered'>
+                    <div className='label-date-order'><p>DATE:</p></div>
+                    <div className='pricce-total-order'><p>{formattedDate}</p></div>
                 </div>
-                <div className='cart-item-select'>
-                    <div className="cart-item-price">
-                        <p> <i style={{ marginRight: "5px" }}>x</i> 11</p>
-                    </div>
+                <div className='status-order'>
+                    <p>{status}</p>
                 </div>
             </div>
+            <div className='list-item-product-order'>
+                {cartItem.map(item => {
+                    return <>
+                        <div className="cart-item">
+                            <div
+                                y
+                                style={{ textDecoration: "none" }}
+                            >
+                                <img src={item.product.images.url} className="cart-item-img" />
+                            </div>
+                            <div className='cart-item-infor'>
+                                <div className="cart-item-selected">
+                                    <p className="cart-item-des">{item.product.product_name}</p>
+                                    <p className="cart-item-size">
+                                        {item.product.category}
+                                    </p>
+                                </div>
+                                <div className='cart-item-select'>
+                                    <div className="cart-item-price">
+                                        <p> ${item.product.price} <i style={{ marginRight: "5px" }}>x</i> {item.amount}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </>
+                })}
+
+
+
+            </div>
+            <div className='total-status'>
+                <div className="total-order">
+                    <div className='label-total-order'><p>TOTAL:</p></div>
+                    <div className='pricce-total-order'><p>${price}</p></div>
+                </div>
+            </div>
+
 
         </div>
     )
