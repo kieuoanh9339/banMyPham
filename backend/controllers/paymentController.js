@@ -1,7 +1,7 @@
 
 const Cart = require('../models/cartModel');
 const Order = require('../models/orderModel');
-
+const moment = require('moment')
 const paymentController = {
     createPayment: (req, res) => {
         var ipAddr = req.headers['x-forwarded-for'] ||
@@ -9,17 +9,16 @@ const paymentController = {
             req.socket.remoteAddress ||
             req.connection.socket.remoteAddress;
 
-        var dateFormat = require('dateformat');
+        
 
 
         var tmnCode = "9KTXV34S";
         var secretKey = "LSNHVMPQPGMJKAGHKVVIBDLHVHNXFFFV";
         var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        var returnUrl = "http:http://localhost:3000/my-order"
+        var returnUrl = "http://localhost:3000/checkout"
 
         var date = new Date();
-
-        var createDate = dateFormat(date, 'yyyymmddHHmmss');
+        let createDate = moment(date).format('YYYYMMDDHHmmss');
         
         var orderId = req.body.orderId;
         var amount = req.body.amount;

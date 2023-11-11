@@ -2,6 +2,14 @@ const Cart = require('../models/cartModel');
 const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 
+const selectProduct = {
+    product_name: 1,
+    price: 1,
+    images: 1,
+    inventory: 1,
+    category: 1
+}
+
 module.exports = {
 
     get: async (req, res) => {
@@ -19,7 +27,21 @@ module.exports = {
     getByUser: async (req, res) => {
         try {
             const userId = req.user.id;
-            const orders = await Order.find({user: userId}).populate("cart").populate("user");
+            const orders = await Order.find({user: userId})
+            .populate({
+                path: 'cart',
+                    populate: {
+                        path: "items", 
+                        model: [Product],
+                        populate: {
+                            path: "product",
+                            model: Product,
+                            select: selectProduct
+                        }
+                        
+                    }
+            })
+            .populate("user");
 
             res.status(200).json({ msg: "Get order by customer", data: orders });
         } catch (err) {
@@ -29,8 +51,21 @@ module.exports = {
 
     getById: async (req, res) => {
         try {
-            const order = await Order.findById(req.params.id).populate("cart")
-                .populate("user");
+            const order = await Order.findById(req.params.id)
+            .populate({
+                path: 'cart',
+                    populate: {
+                        path: "items", 
+                        model: [Product],
+                        populate: {
+                            path: "product",
+                            model: Product,
+                            select: selectProduct
+                        }
+                        
+                    }
+            })
+            .populate("user");
             res.status(200).json({ msg: "Get order successfully", data: order });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -44,7 +79,21 @@ module.exports = {
             const process= req.body
             const newOrder = await Order.create({ process: process, user: userId, cart: cartId })
             console.log(newOrder);
-            const order = await Order.findById(newOrder._id).populate("cart").populate("user");
+            const order = await Order.findById(newOrder._id)
+            .populate({
+                path: 'cart',
+                    populate: {
+                        path: "items", 
+                        model: [Product],
+                        populate: {
+                            path: "product",
+                            model: Product,
+                            select: selectProduct
+                        }
+                        
+                    }
+            })
+            .populate("user");
             res.status(200).json({ msg: "Create order successfully!", data: order });
         } catch (err) {
             return res.status(500).json({ msg: err.message });

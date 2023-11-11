@@ -22,7 +22,7 @@ function OrderItem({ order }) {
             setStatus("Chờ xử lý")
         } else if (order.status === "10" || order.status === "01") {
             setStatus("Đã huỷ")
-        } else {
+        } if (order.status === "11") {
             setStatus("Chờ nhận hàng")
         }
 
@@ -88,6 +88,18 @@ function OrderItem({ order }) {
                 <div className="total-order">
                     <div className='label-total-order'><p>TOTAL:</p></div>
                     <div className='pricce-total-order'><p>${price}</p></div>
+                </div>
+                <div className='change-status'>
+                    {(order.status === "10" || order.status === "01") ? <></> : <div className='btn-cancel-success'>
+                        {order.status === "11" ? <></> : <div className='btn-cancel'>
+                            <p>Huỷ đơn</p>
+                        </div>}
+
+                        <div className='btn-success'>
+                            <p>Đã nhận</p>
+                        </div>
+                    </div>}
+
                 </div>
             </div>
 

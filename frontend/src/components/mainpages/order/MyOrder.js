@@ -24,7 +24,7 @@ function MyOrder() {
     return (
         <div className='my-order'>
             {
-                orderByC?.map(order => {
+                orderByC?.reverse()?.map(order => {
                     return <>
                        <OrderItem order ={order}/>
                     </>

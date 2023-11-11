@@ -19,7 +19,7 @@ function HomePage() {
     const [categories] = state.categoryAPI.category
     const [category, setCategory] = state.productAPI.category
     const fadeImages = [banner4, banner1, banner3, banner5];
-    const skin_type = ["Normal skin", "Dry Skin", "Oily Skin", "Combination Skin"]
+    const skin_type = ["Normal", "Dry", "Oily"]
     const [skinType, setSkinType] = state.productAPI.skinType
     console.log(newProduct)
     return (
@@ -75,12 +75,14 @@ function HomePage() {
                 </div>
                 <div className='looking-for'>
                     <h3>I have </h3>
-                    <select name="Skin Tpye" className='select-skin' onChange={(e) => { setSkinType(e.target.value) }}>
+                    <select name="Skin Tpye" className='select-skin' onChange={(e) => { 
+                        setSkinType(e.target.value)
+                     }}>
                         <option value="">Skin Type</option>
                         {
                             skin_type.map(c => (
                                 <option value={c} >
-                                    {c}
+                                    {c} Skin
                                 </option>
                             ))
                         }

@@ -87,22 +87,15 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
     
     return (
         <div className="cart-item">
-            {isCart && <button class="delete-button" onClick={onClickDelete}>Xóa</button>}
-            {!isCart ? (
-                <div
-                    y
-                    style={{ textDecoration: "none" }}
-                >
-                    <img src={Anh1} className="cart-item-img" />
-                </div>
-            ) : (
+            <button class="delete-button" onClick={onClickDelete}>Xóa</button>
+            
                 <Link
                     to={`/product/detail/`}
                     style={{ textDecoration: "none" }}
                 >
-                    <img src={Anh1} className="cart-item-img" />
+                    <img src={cartItem?.product.images.url} className="cart-item-img" />
                 </Link>
-            )}
+            
             <div className='cart-item-infor'>
                 <div className="cart-item-selected">
                     <p className="cart-item-des">{cartItem?.product?.product_name}</p>
@@ -113,9 +106,7 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
                 <div className='cart-item-select'>
                     <div className="cart-item-price">
                         <p style={{ marginRight: "10px" }}>${cartItem?.product?.price}</p>
-                        {!isCart && (
-                            <p> <i style={{ marginRight: "5px" }}>x</i> 11</p>
-                        )}
+                        
                     </div>
                     {isCart && (
                         <div className="cart-option">

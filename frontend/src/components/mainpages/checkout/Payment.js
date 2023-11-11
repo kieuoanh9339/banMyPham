@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { GlobalState } from "../../../GlobalState";
 import CartAPI from "../../../API/CartAPI";
 import axios from "../../../API/AxiosConfig";
 import "./Payment.css"
 
 function Payment() {
+    const url = window.location.href;
     const state = useContext(GlobalState)
     const [user, setUser] = state.userAPI.user
     const cartAPI = CartAPI(localStorage.getItem("token"))
@@ -21,16 +22,22 @@ function Payment() {
         check = true
         console.log(check)
     }
-    const checkProcessCard = () => {
-        check = false
-        console.log(check)
-    }
+
+    const [pay, setPay] = useState({
+        language: "en",
+        amount: 0,
+    });
+
+    pay.amount = cart.totalPrice*24000
+    
+    
 
     const createOrder = async (e) => {
         try {
             if (check === true) {
                 let checkout = false
-                const res1 = await axios.get(`/carts/${cart._id }/checkout`)
+                const cartId = localStorage.getItem("cartId")
+                const res1 = await axios.get(`/carts/${cartId}/checkout`)
                 console.log(res1)
                 if (res1.status === 'success') {
                     checkout = true
@@ -38,7 +45,19 @@ function Payment() {
                 if (checkout) {
                     const res = await axios.post("orders", { ...payment })
                     alert(res.msg)
-                    window.location.href= "/"
+                    window.location.href = "/my-order"
+                }
+            } else {
+                console.log(pay);
+                if (!pay.bankCode) {
+                    alert("Vui long chon phuong thuc thanh toan")
+                } else {
+                    const res1 = await axios.post("orders", { ...payment })
+                    alert(res1.msg)
+                    localStorage.setItem("orderId",res1.data._id)
+                    pay.orderId= res1.data._id
+                    const res2 = await axios.post("/payment/create_payment_url", { ...pay })
+                    window.location.href = res2
                 }
             }
         } catch (e) {
@@ -46,6 +65,43 @@ function Payment() {
         }
     }
 
+    useEffect(() => {
+        const getParameterByName = (name) => {
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return "";
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        };
+        const vnp_ResponCode = getParameterByName("vnp_ResponseCode");
+        if (vnp_ResponCode == "00") {
+            const createOrder = async () => {
+                try {
+                    console.log("Success")
+                    const cartId = localStorage.getItem("cartId")
+                    const res1 = await axios.get(`/carts/${cartId}/checkout`)
+                    console.log(res1)
+                    window.location.href=("/my-order")
+                    
+                } catch (e) {
+                    alert(e.message)
+                }
+            }
+            createOrder()
+        } else if (vnp_ResponCode == "24") {
+            alert("Thanh toan that bai")
+        }
+    }, [url]);
+
+
+
+    const handleChange = (value) => {
+        setPay({ ...pay, ["bankCode"]: value });
+        check = false
+        
+    };
+    console.log(pay)
     return (
         <div className="payment">
             <div className="payment-filling">
@@ -120,7 +176,7 @@ function Payment() {
                                     type="radio"
                                     name="cash"
                                     value="VNBANK"
-                                    onClick={checkProcessCard}
+                                    onChange={(e) => handleChange(e.target.value)}
                                 />
                                 Payment via ATM-Domestic bank account
                             </label>

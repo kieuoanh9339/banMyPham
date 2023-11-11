@@ -96,7 +96,7 @@ function ProductDetail() {
                         <div className='tilte-skintype'>
                             Skin type:
                         </div>
-                        <div> {detailProduct.skinType}</div>
+                        <div> {detailProduct.skinType} Skin</div>
                     </div>
                     <div className='detail-product-description'>
                         <div className='title-desc'>Description: </div>

@@ -84,7 +84,7 @@
 .total-status{
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
     margin: 25px;
 }
 .label-total-order, .label-date-order{
@@ -96,4 +96,29 @@
     border: 1px solid black;
     padding:  5px 10px;
     margin-right: 20px;
+}
+
+.btn-cancel-success{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin: 25px;
+}
+
+.btn-cancel p{
+    max-width: fit-content;
+    border: 1px solid red;
+    padding:  5px 10px;
+    margin-right: 20px;
+    color: red;
+    cursor: pointer;
+}
+
+.btn-success p{
+    max-width: fit-content;
+    border: 1px solid green;
+    padding:  5px 10px;
+    margin-right: 20px;
+    color: green;
+    cursor: pointer;
 }

@@ -19,9 +19,10 @@ function Header() {
     const [isOpen, setIsOpen] = useState(false)
     const [token, setToken] = state.token
     const categoryAPI = CategoryAPI(localStorage.getItem("token"))
-    const [categories]= categoryAPI.category//mảng cac category
+    const [categories] = categoryAPI.category//mảng cac category
 
-    const [category,setCategory]=state.productAPI.category
+    const [category, setCategory] = state.productAPI.category//filtering
+    const [skinType, setSkinType] = state.productAPI.skinType//fi;tering
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
@@ -39,7 +40,17 @@ function Header() {
         alert("You should login")
     }
 
-    const skinType=["Normal skin","Oily skin","Dry skin", "Combination skin"]
+    const skin_Type = ["Normal", "Oily", "Dry"]
+
+    // const changeFilter=(e) =>{
+    //     setCategory('')
+    //     setSkinType(e)
+    // }
+    const changeFilterCate = (e) => {
+        setCategory(e)
+        // setSkinType('')
+    }
+
     return (
         <header>
             <div className='hotline'>
@@ -106,15 +117,18 @@ function Header() {
                                 <div class="dropbtn">Category</div>
                                 {
                                     !isAdmin ? (<div>
-                                            <div class="dropdown-content">
+                                        <div class="dropdown-content">
                                             {categories.map(e => {
-                                                return <Link to="/product" onClick={() => {setCategory(e.name)}} >
-                                                     <a>{e.name}</a> 
+                                                return <Link to="/product" onClick={() => {
+                                                    setCategory(e.name)
+                                                    setSkinType('')
+                                                }} >
+                                                    <a >{e.name}</a>
                                                 </Link>
-                                                
+
                                             })}
-                                            </div>
-                                        
+                                        </div>
+
                                     </div>) : (<></>)
                                 }
 
@@ -129,28 +143,34 @@ function Header() {
                     }
                 </div>
                 <div className='product'>
-                    <Link to="/product">
-                        <button class="dropbtn">Product</button>
+                    <Link to="/product" onClick={() => {
+                        setCategory('')
+                        setSkinType('')
+                    }}>
+                        <button class="dropbtn" >Product</button>
                     </Link>
                 </div>
                 {
                     !isAdmin ? (<div className='skin-type' >
-                        
-                            <div class="dropdown">
-                                <button class="dropbtn">Skin Type</button>
-                                {
-                                    !isAdmin ? (<div>
-                                            <div class="dropdown-content">
-                                            {skinType.map(e => {
-                                                return <Link to="/product">
-                                                     <a>{e}</a>
-                                                </Link>
-                                            })}
-                                            </div>
-                                        
-                                    </div>) : (<></>)
-                                }
-                            </div>
+
+                        <div class="dropdown">
+                            <button class="dropbtn">Skin Type</button>
+                            {
+                                !isAdmin ? (<div>
+                                    <div class="dropdown-content">
+                                        {skin_Type.map(e => {
+                                            return <Link to="/product" onClick={() => {
+                                                setCategory('')
+                                                setSkinType(e)
+                                            }} >
+                                                <a>{e} Skin</a>
+                                            </Link>
+                                        })}
+                                    </div>
+
+                                </div>) : (<></>)
+                            }
+                        </div>
                     </div>) : (<></>)
                 }
 

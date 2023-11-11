@@ -132,7 +132,7 @@ function CreateProduct() {
         }
     } 
 
-    const skin_type = [{ name: "Normal skin" }, { name: "Dry Skin" }, { name: "Oily Skin" }]
+    const skin_type = [{ name: "Normal" }, { name: "Dry" }, { name: "Oily" }]
 
     return (
         <div className="create_product">
