@@ -4,11 +4,14 @@ import './OrderItem.css'
 import Anh1 from "../../header/icons/paulaTim.jpg"
 import { useState } from "react";
 import axios from "../../../API/AxiosConfig"
-function OrderItem({ order }) {
+import Popup from '../../utils/popup/Popup';
+import PopupConfirm from '../../utils/popup/PopupConfirm';
+function OrderItem({ order, isAdmin }) {
+    const [displayStatus, setDisplayStatus] = useState("")
     const [status, setStatus] = useState("")
-    const { items } = order.cart
     const [price, setPrice] = useState(0)
     const [cartItem, setCartItem] = useState([])
+    const [callback, setCallback] = useState(false)
 
     // Chuyển đổi ngày tạo thành đối tượng Date
     const createdDate = new Date(order.createdAt);
@@ -16,45 +19,70 @@ function OrderItem({ order }) {
     // Format ngày tháng theo dạng "DD/MM/YYYY"
     const formattedDate = `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`;
 
-
+    const [isCancel, setIsCancel] = useState()
+    const [isConfirm, setIsConfirm] = useState()
     useEffect(() => {
-        if (order.status === "00") {
-            setStatus("Chờ xử lý")
-        } else if (order.status === "10" || order.status === "01") {
-            setStatus("Đã huỷ")
-        } if (order.status === "11") {
-            setStatus("Chờ nhận hàng")
-        }
-
         const getOrderItem = async (e) => {
             try {
-                const res = await axios.get(`/carts/${order.cart._id}`)
-                console.log(res)
-                setPrice(res.cart.totalPrice)
-                setCartItem(res.cart.items)
+                const res = await axios.get(`/orders/${order._id}`)
+                setPrice(res.data?.cart?.totalPrice)
+                setCartItem(res.data?.cart?.items)
                 console.log(cartItem)
+                setStatus(res.data?.status)
+                if (res.data?.status === "00") {
+                    setDisplayStatus("Chờ xử lý")
+                } else if (res.data?.status === "10") {
+                    setDisplayStatus("Đã huỷ")
+                } else if (res.data?.status === "01") {
+                    setDisplayStatus("Đơn hàng đã bị huỷ")
+                } else if (res.data?.status === "11") {
+                    setDisplayStatus("Chờ nhận hàng")
+                }else if (res.data?.status === "111") {
+                    setDisplayStatus("Giao hàng thành công")
+                }
             } catch (e) {
                 alert(e.message)
             }
         }
         getOrderItem()
-    }, [])
+
+    }, [callback])
 
 
+    const handelClick = () => {
+        setIsCancel(true)
+    }
+
+    const handelClickConfirm = () => {
+        setIsConfirm(true)
+    }
 
     return (
         <div className='my-order-element'>
+            {isConfirm && <PopupConfirm setIsConfirm={setIsConfirm} orderId={order._id} isAdmin={isAdmin} setCallback={setCallback} callback={callback} />}
+            {isCancel && <Popup setIsCancel={setIsCancel} orderId={order._id} isAdmin={isAdmin} setCallback={setCallback} callback={callback} />}
             <div className='date-status'>
                 <div className='date-ordered'>
                     <div className='label-date-order'><p>DATE:</p></div>
                     <div className='pricce-total-order'><p>{formattedDate}</p></div>
                 </div>
                 <div className='status-order'>
-                    <p>{status}</p>
+                    <p>{displayStatus}</p>
                 </div>
             </div>
+            {isAdmin && <div className='infor-user-order'>
+                <div className='order_user-name' style={{ padding: "12px 24px", display: "flex" }}>
+                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Name: </p><p>{order?.user?.fullname}</p>
+                </div>
+                <div className='order_user-address' style={{ padding: "12px 24px", display: "flex" }}>
+                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Address: </p><p>{order?.user?.address}</p>
+                </div>
+                <div className='order_user-phone' style={{ padding: "12px 24px", display: "flex" }}>
+                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Phone Number: </p><p>{order?.user?.phonenumber}</p>
+                </div>
+            </div>}
             <div className='list-item-product-order'>
-                {cartItem.map(item => {
+                {cartItem?.map(item => {
                     return <>
                         <div className="cart-item">
                             <div
@@ -85,24 +113,44 @@ function OrderItem({ order }) {
 
             </div>
             <div className='total-status'>
-                <div className="total-order">
-                    <div className='label-total-order'><p>TOTAL:</p></div>
-                    <div className='pricce-total-order'><p>${price}</p></div>
+                <div>
+                    <div className="total-order">
+                        <div className='label-total-order'><p>TOTAL:</p></div>
+                        <div className='pricce-total-order'><p>${price}</p></div>
+
+                    </div>
+
                 </div>
                 <div className='change-status'>
-                    {(order.status === "10" || order.status === "01") ? <></> : <div className='btn-cancel-success'>
-                        {order.status === "11" ? <></> : <div className='btn-cancel'>
-                            <p>Huỷ đơn</p>
-                        </div>}
+                    {
+                        (status === "10" || status === "01" || status === "111") ? <></>
+                            : <div className='btn-cancel-success'>
+                                {
+                                    status === "00" ?
+                                        <>
+                                            <div className='cancel' >
+                                                <p onClick={handelClick}>Huỷ đơn</p>
+                                            </div>
+                                            <div className='success' onClick={handelClickConfirm}>
+                                                {isAdmin ? <p >Xác nhận</p> : <p>Đã nhận</p>}
+                                            </div>
+                                        </> 
+                                        : <>
+                                        <div className='success' onClick={handelClickConfirm}>
+                                                {!isAdmin && <p>Đã nhận</p>}
+                                            </div>
+                                        </>
+                                }
 
-                        <div className='btn-success'>
-                            <p>Đã nhận</p>
-                        </div>
-                    </div>}
+
+                            </div>
+                    }
 
                 </div>
             </div>
-
+            <div className='process-order' style={{ fontSize: "14px", color: "GrayText" }}>
+                <i>Note: {order?.process === '0' ? "Đơn hàng thanh toán tiền mặt" : "Đơn hàng đã thanh toán"}</i>
+            </div>
 
         </div>
     )

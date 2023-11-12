@@ -15,9 +15,20 @@ module.exports = {
     get: async (req, res) => {
         try {
             const orders = await Order.find()
-                .populate("cart")
-                .populate("user");
+                .populate({
+                    path: 'cart',
+                    populate: {
+                        path: "items",
+                        model: [Product],
+                        populate: {
+                            path: "product",
+                            model: Product,
+                            select: selectProduct
+                        }
 
+                    }
+                })
+                .populate("user");
             res.status(200).json({ msg: "Gel all orders successfully!", data: orders });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -27,21 +38,21 @@ module.exports = {
     getByUser: async (req, res) => {
         try {
             const userId = req.user.id;
-            const orders = await Order.find({user: userId})
-            .populate({
-                path: 'cart',
+            const orders = await Order.find({ user: userId })
+                .populate({
+                    path: 'cart',
                     populate: {
-                        path: "items", 
+                        path: "items",
                         model: [Product],
                         populate: {
                             path: "product",
                             model: Product,
                             select: selectProduct
                         }
-                        
+
                     }
-            })
-            .populate("user");
+                })
+                .populate("user");
 
             res.status(200).json({ msg: "Get order by customer", data: orders });
         } catch (err) {
@@ -52,20 +63,20 @@ module.exports = {
     getById: async (req, res) => {
         try {
             const order = await Order.findById(req.params.id)
-            .populate({
-                path: 'cart',
+                .populate({
+                    path: 'cart',
                     populate: {
-                        path: "items", 
+                        path: "items",
                         model: [Product],
                         populate: {
                             path: "product",
                             model: Product,
                             select: selectProduct
                         }
-                        
+
                     }
-            })
-            .populate("user");
+                })
+                .populate("user");
             res.status(200).json({ msg: "Get order successfully", data: order });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -76,24 +87,24 @@ module.exports = {
         try {
             const userId = req.body.userId;
             const cartId = req.body.cartId;
-            const process= req.body
+            const process = req.body.process
             const newOrder = await Order.create({ process: process, user: userId, cart: cartId })
             console.log(newOrder);
             const order = await Order.findById(newOrder._id)
-            .populate({
-                path: 'cart',
+                .populate({
+                    path: 'cart',
                     populate: {
-                        path: "items", 
+                        path: "items",
                         model: [Product],
                         populate: {
                             path: "product",
                             model: Product,
                             select: selectProduct
                         }
-                        
+
                     }
-            })
-            .populate("user");
+                })
+                .populate("user");
             res.status(200).json({ msg: "Create order successfully!", data: order });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -103,7 +114,7 @@ module.exports = {
     update: async (req, res) => {
         try {
             const status = req.body.status;
-            await Order.findByIdAndUpdate(req.params.id, {status: status});
+            await Order.findByIdAndUpdate(req.params.id, { status: status });
             const order = await Order.findById(req.params.id).populate("cart")
                 .populate("user");
             res.status(200).json({ msg: "Update order successfully!", data: order });

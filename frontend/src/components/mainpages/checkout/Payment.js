@@ -15,7 +15,7 @@ function Payment() {
     const payment = {
         userId: user._id,
         cartId: cart._id,
-        process: "Thanh toán tiền mặt"
+        process: "0"
     }
 
     const checkProcessCash = () => {
@@ -28,9 +28,9 @@ function Payment() {
         amount: 0,
     });
 
-    pay.amount = cart.totalPrice*24000
-    
-    
+    pay.amount = cart.totalPrice * 24000
+
+
 
     const createOrder = async (e) => {
         try {
@@ -52,10 +52,11 @@ function Payment() {
                 if (!pay.bankCode) {
                     alert("Vui long chon phuong thuc thanh toan")
                 } else {
+                    payment.process = "1"
                     const res1 = await axios.post("orders", { ...payment })
-                    alert(res1.msg)
-                    localStorage.setItem("orderId",res1.data._id)
-                    pay.orderId= res1.data._id
+
+                    localStorage.setItem("orderId", res1.data._id)
+                    pay.orderId = res1.data._id
                     const res2 = await axios.post("/payment/create_payment_url", { ...pay })
                     window.location.href = res2
                 }
@@ -82,14 +83,20 @@ function Payment() {
                     const cartId = localStorage.getItem("cartId")
                     const res1 = await axios.get(`/carts/${cartId}/checkout`)
                     console.log(res1)
-                    window.location.href=("/my-order")
-                    
+                    window.location.href = ("/my-order")
+
                 } catch (e) {
                     alert(e.message)
                 }
             }
             createOrder()
         } else if (vnp_ResponCode == "24") {
+            const deleteOrder = async () => {
+                const orderId = localStorage.getItem("orderId")
+                axios.delete(`/orders/${orderId}`)
+            }
+            deleteOrder()
+
             alert("Thanh toan that bai")
         }
     }, [url]);
@@ -99,7 +106,7 @@ function Payment() {
     const handleChange = (value) => {
         setPay({ ...pay, ["bankCode"]: value });
         check = false
-        
+
     };
     console.log(pay)
     return (

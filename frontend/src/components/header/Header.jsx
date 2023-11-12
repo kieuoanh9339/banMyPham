@@ -23,6 +23,7 @@ function Header() {
 
     const [category, setCategory] = state.productAPI.category//filtering
     const [skinType, setSkinType] = state.productAPI.skinType//fi;tering
+    const [search, setSearch] = state.productAPI.search
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
@@ -66,8 +67,14 @@ function Header() {
 
                 <div className='login-cart'>
                     <div className='search'>
-                        <img src={Search} alt='' width="25px" className='search-icon' />
-                        <input type="text" placeholder="Search" className='search-input' />
+                        <Link to="/product">
+                            <img src={Search} alt='' width="25px" className='search-icon' />
+                        </Link>
+                        <input type="text" placeholder="Search" className='search-input' value={search} onChange={(e)=>{
+                            setSearch(e.target.value)
+                            setCategory('')
+                                setSkinType('')
+                            }}  />
                     </div>
                     <div className='user-dropdown'>
                         <img src={User} className='user-icon' width="35px" height="35px" onClick={toggleDropdown} />
@@ -122,6 +129,7 @@ function Header() {
                                                 return <Link to="/product" onClick={() => {
                                                     setCategory(e.name)
                                                     setSkinType('')
+                                                    setSearch('')
                                                 }} >
                                                     <a >{e.name}</a>
                                                 </Link>
@@ -146,6 +154,7 @@ function Header() {
                     <Link to="/product" onClick={() => {
                         setCategory('')
                         setSkinType('')
+                        setSearch('')
                     }}>
                         <button class="dropbtn" >Product</button>
                     </Link>
@@ -162,6 +171,7 @@ function Header() {
                                             return <Link to="/product" onClick={() => {
                                                 setCategory('')
                                                 setSkinType(e)
+                                                setSearch('')
                                             }} >
                                                 <a>{e} Skin</a>
                                             </Link>

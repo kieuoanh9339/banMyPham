@@ -10,9 +10,10 @@ function ProductAPI() {
     const [callback,setCallback] = useState(false)
     const [category, setCategory] = useState('')
     const [skinType, setSkinType]= useState('')
+    const [search, setSearch] = useState('')
     useEffect(() => {
         const getProducts = async () => {
-            const res = await axios.get(`/product?category=${category}&skinType=${skinType}`)
+            const res = await axios.get(`/product?category=${category}&skinType=${skinType}&product_name=${search}`)
 
             setProducts(res.products)
             const res2 = await axios.get(`/product?limit=5`)
@@ -20,14 +21,15 @@ function ProductAPI() {
             setNewProduct(res2.products)
         }
         getProducts()
-    }, [callback,category,skinType])
+    }, [callback,category,skinType,search])
 
     return {
         products: [products, setProducts],
         newProduct: [newProduct, setNewProduct] ,
         callback: [callback,setCallback],
         category: [category, setCategory],
-        skinType: [skinType,setSkinType]
+        skinType: [skinType,setSkinType],
+        search: [search, setSearch]
     }
 }
 

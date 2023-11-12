@@ -1,7 +1,7 @@
-const Product= require('../models/productModel')
+const Product = require('../models/productModel')
 
 //sort, filtering, paginating
-class APIfeatures{
+class APIfeatures {
     // constructor(query, queryString){
     //     this.query=query
     //     this.queryString= queryString
@@ -33,9 +33,9 @@ class APIfeatures{
     //     this.query= this.query.skip(skip).limit(limit)
     //     return this
     // } 
-    constructor(query,queryString){
-        this.query=query;
-        this.queryString= queryString;
+    constructor(query, queryString) {
+        this.query = query;
+        this.queryString = queryString;
     }
     filtering(){
         const queryObj = {...this.queryString}
@@ -45,44 +45,46 @@ class APIfeatures{
         if(!queryObj.skinType) {
             delete(queryObj['skinType'])
         }
+        if(!queryObj.product_name) {
+            delete(queryObj['product_name'])
+        }
         const excludedFields = ['page','sort','limit']
         excludedFields.forEach(el => delete(queryObj[el]))
-
-        
         let queryStr = JSON.stringify(queryObj)
-        queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match) //gte lt means lessthan greater than
-        
+        // queryStr = queryStr.replace(/\b(regex)\b/g, match =>  match) 
+
         this.query.find(JSON.parse(queryStr))
-        
+
         return this;
     }
-    sorting(){
+    
+    sorting() {
         this.query = this.query.sort('sold')
         return this;
     }
-    paginating(){
+    paginating() {
         const page = this.queryString.page * 1 || 1
         const limit = this.queryString.limit * 1 || 9
-        const skip = (page - 1 ) * limit;
+        const skip = (page - 1) * limit;
         this.query = this.query.skip(skip).limit(limit)
         return this;
     }
 }
 
 const productCtrl = {
-    
-    getAll: async (req,res) =>{
-        try{
-            
-            const features= new APIfeatures(Product.find(), req.query).filtering().sorting().paginating()
+
+    getAll: async (req, res) => {
+        try {
+
+            const features = new APIfeatures(Product.find(), req.query).filtering().sorting().paginating()
             const products = await features.query
             res.status(200).json({
-                status:"success",
-                result:products.length,
+                status: "success",
+                result: products.length,
                 products
             });
-        }catch(err){
-            return res.status(500).json({msg: err.message})
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
         }
     },
     // getById: async (req,res) =>{
@@ -110,99 +112,99 @@ const productCtrl = {
     //         return res.status(500).json({msg: err.message})
     //     }
     // },
-    createProduct: async (req,res) =>{
-        try{
-            const{product_name, price,desc,images,category,inventory, skinType}=req.body
-            const message1={}
-            let check= 1
-            if(product_name.trim().length===0){
-                check= 0
-                message1.product_name="This field is the required field"
+    createProduct: async (req, res) => {
+        try {
+            const { product_name, price, desc, images, category, inventory, skinType } = req.body
+            const message1 = {}
+            let check = 1
+            if (product_name.trim().length === 0) {
+                check = 0
+                message1.product_name = "This field is the required field"
             }
-            if(price.toString().trim().length===0){
-                check= 0
-                message1.price="This field is the required field"
+            if (price.toString().trim().length === 0) {
+                check = 0
+                message1.price = "This field is the required field"
             }
-            if(desc.trim().length===0){
-                check= 0
-                message1.desc="This field is the required field"
+            if (desc.trim().length === 0) {
+                check = 0
+                message1.desc = "This field is the required field"
             }
-            if(category.trim().length===0){
-                check= 0
-                message1.category="This field is the required field"
+            if (category.trim().length === 0) {
+                check = 0
+                message1.category = "This field is the required field"
             }
-            if(inventory.toString().trim().length===0){
-                check= 0
-                message1.inventory="This field is the required field"
+            if (inventory.toString().trim().length === 0) {
+                check = 0
+                message1.inventory = "This field is the required field"
             }
-            if(!images) {
-                check= 0
-                message1.images= "No image upload"
+            if (!images) {
+                check = 0
+                message1.images = "No image upload"
             }
             if (skinType.trim().length === 0) {
-                check= 0
-                message1.skinType="This field is the required field"
+                check = 0
+                message1.skinType = "This field is the required field"
             }
-            if(check==0){
+            if (check == 0) {
                 return res.status(400).json(message1)
             }
             const newProduct = new Product(req.body);
             const product = await newProduct.save();
             res.status(200).json({ message: "Create product successfully", data: product });
 
-        }catch(err){
-            return res.status(500).json({msg: err.message})
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
         }
     },
-    updateProduct: async (req,res) =>{
-        try{
-            const{product_name, price,desc,images,category,inventory, skinType}=req.body
-            const message1={}
-            let check= 1
-            if(product_name.trim().length===0){
-                check= 0
+    updateProduct: async (req, res) => {
+        try {
+            const { product_name, price, desc, images, category, inventory, skinType } = req.body
+            const message1 = {}
+            let check = 1
+            if (product_name.trim().length === 0) {
+                check = 0
             }
-            if(price.toString().trim().length===0){
-                check= 0
+            if (price.toString().trim().length === 0) {
+                check = 0
             }
-            if(desc.trim().length===0){
-                check= 0
+            if (desc.trim().length === 0) {
+                check = 0
             }
-            if(category.trim().length===0){
-                check= 0
+            if (category.trim().length === 0) {
+                check = 0
             }
-            if(inventory.toString().trim().length===0){
-                check= 0
+            if (inventory.toString().trim().length === 0) {
+                check = 0
             }
-            if(!images) {
-                check= 0
-                message1= "No image upload"
+            if (!images) {
+                check = 0
+                message1 = "No image upload"
             }
             if (skinType.trim().length === 0) {
-                check= 0
+                check = 0
             }
-            if(check==0){
+            if (check == 0) {
                 return res.status(400).json("This field is the required field")
             }
 
             //update
             await Product.findByIdAndUpdate(req.params.id, req.body);
-            res.status(200).json({ message: "Update product successfully"});
+            res.status(200).json({ message: "Update product successfully" });
 
-        }catch(err){
-            return res.status(500).json({msg: err.message})
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
         }
     },
-    deleteProduct: async (req,res) =>{
-        try{
+    deleteProduct: async (req, res) => {
+        try {
             await Product.findByIdAndDelete(req.params.id)
             res.status(200).json({ msg: "Delete product successfully" });
-        }catch(err){
-            return res.status(500).json({msg: err.message})
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
         }
     },
 }
 
-module.exports= productCtrl
+module.exports = productCtrl
 
 

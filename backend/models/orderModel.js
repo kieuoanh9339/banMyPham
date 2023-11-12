@@ -9,9 +9,13 @@ const ordertSchema= new mongoose.Schema({
         ref: "User",
         required:true,
     },
+    process:{
+        type:String,
+        required:true
+    },// 0: tien mat 1: chuyen khoan
     status: {
         type: String,
-        enum: ["00", "10", "01", "11"],
+        enum: ["00", "10", "01", "11","111"],
         default: "00"
     }, // 00 - chờ xử lý || 10 -> đã huỷ || 01 - admin huỷ || 11 - admin xác nhận -> chờ nhận hàng
     cart: {

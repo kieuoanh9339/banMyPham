@@ -3,44 +3,44 @@ import "./Popup.css";
 import axios from "../../../API/AxiosConfig";
 import { useNavigate } from "react-router-dom";
 
-function Popup(props) {
-  const { setIsCancel, orderId, isAdmin,setCallback,callback } = props;
+function PopupConfirm(props) {
+  const { setIsConfirm, orderId, isAdmin,setCallback,callback } = props;
   const navigate = useNavigate()
   const checkClose = () => {
-    setIsCancel(false)
+    setIsConfirm(false)
   }
-  const checkCancel = async () => {
+  const checkConfirm = async () => {
     if (!isAdmin) {
-      const res = await axios.put(`/orders/${orderId}`, { status: "10" })
+      const res = await axios.put(`/orders/${orderId}`, { status: "111" })
       console.log(res)
     } else {
-      const res = await axios.put(`/orders/${orderId}`, { status: "01" })
+      const res = await axios.put(`/orders/${orderId}`, { status: "11" })
       console.log(res)
     }
-    setIsCancel(false)
+    setIsConfirm(false)
     setCallback(!callback)
    
   }
   return (
     <div
-      className="pop-up" style={setIsCancel ? { display: "block" } : { display: "none" }}
+      className="pop-up" style={setIsConfirm ? { display: "block" } : { display: "none" }}
     >
       <div className="p-pop-up">
         <div class="popup-main">
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div class="popup-title" style={{ fontWeight: "bold" }}>
-              Cancel Order
+              Confirm Order
             </div>
           </div>
           <div class="popup-content">
             <p id="textPopup">
-              Are you sure want to cancel this order?
+              Are you sure want to confirm this order?
             </p>
           </div>
         </div>
         <div class="popup-footer">
           <div className='cancel' >
-            <p onClick={checkCancel}>Cancel</p>
+            <p onClick={checkConfirm}>Confirm</p>
           </div>
 
           <div className='success' >
@@ -52,4 +52,4 @@ function Popup(props) {
   );
 }
 
-export default Popup;
+export default PopupConfirm;

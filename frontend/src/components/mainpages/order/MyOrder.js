@@ -6,7 +6,9 @@ import "./MyOrder.css"
 function MyOrder() {
     const state = useContext(GlobalState)
     const [isAdmin] = state.userAPI.isAdmin
+    const [user, setUser]=state.userAPI.user
     const [orderByC, setOrderByC] = useState([])
+    
     useEffect(() => {
         const getOrders = async () => {
             if (isAdmin === false) {
@@ -16,6 +18,7 @@ function MyOrder() {
             } else {
                 const res = await axios.get(`/orders`)
                 console.log(res)
+                setOrderByC(res.data)
             }
         }
         getOrders()
@@ -26,7 +29,7 @@ function MyOrder() {
             {
                 orderByC?.reverse()?.map(order => {
                     return <>
-                       <OrderItem order ={order}/>
+                       <OrderItem order ={order}  isAdmin={isAdmin} />
                     </>
                 })
             }
