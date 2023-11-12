@@ -14,6 +14,7 @@ import CreateCategory from './createCategory/CreateCategory'
 import MyOrder from './order/MyOrder'
 import Payment from './checkout/Payment'
 import MyProfile from './myProfile/MyProfile'
+import Tip from './tip/Tip'
 import test from './ProductDetail/test'
 function Pages(){
     return (
@@ -32,7 +33,7 @@ function Pages(){
             <Route path='/my-order' exact Component={MyOrder}/>
             <Route path='/checkout' exact Component={Payment}/>
             <Route path='/my-account' exact Component={MyProfile}/>
-
+            <Route path='/tip' exact Component={Tip}/>
 
        </Routes>
     )
