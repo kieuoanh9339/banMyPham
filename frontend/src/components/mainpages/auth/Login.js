@@ -20,6 +20,7 @@ function Login() {
     const onClickSubmit = async (e) => {
         e.preventDefault()
         const res = await axios.post("user/login", { ...user })
+        console.log(res)
         if (res.status === 400) {
             setEmail(res.data.email)
             setPw(res.data.password)

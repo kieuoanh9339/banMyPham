@@ -188,8 +188,9 @@ const productCtrl = {
             }
 
             //update
-            await Product.findByIdAndUpdate(req.params.id, req.body);
-            res.status(200).json({ message: "Update product successfully" });
+            const product=await Product.findByIdAndUpdate(req.params.id, req.body);
+            await product.save();
+            res.status(200).json({ message: "Update product successfully", product });
 
         } catch (err) {
             return res.status(500).json({ msg: err.message })
