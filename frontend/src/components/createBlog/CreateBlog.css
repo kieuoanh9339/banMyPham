@@ -1,0 +1,12 @@
+.btn-create{
+    background-color: #000;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    margin: 20px 0;
+    padding: 10px 50px;
+    text-transform: capitalize;
+    width: 200px;
+    border-radius: 5px;
+}

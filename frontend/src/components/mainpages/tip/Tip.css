@@ -35,3 +35,23 @@
     margin: 10px;
     font-size: 14px;
 }
+
+.list-blog{
+    margin: 30px;
+}
+
+.blog-item{
+    padding-bottom: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    
+}
+
+.blog-item:hover{
+    text-decoration: underline;
+    color: rgb(120, 120, 231);
+}
+
+.create-blog{
+    margin: 30px;
+}

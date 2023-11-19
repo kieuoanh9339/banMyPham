@@ -70,11 +70,11 @@ function Header() {
                         <Link to="/product">
                             <img src={Search} alt='' width="25px" className='search-icon' />
                         </Link>
-                        <input type="text" placeholder="Search" className='search-input' value={search} onChange={(e)=>{
+                        <input type="text" placeholder="Search" className='search-input' value={search} onChange={(e) => {
                             setSearch(e.target.value)
                             setCategory('')
-                                setSkinType('')
-                            }}  />
+                            setSkinType('')
+                        }} />
                     </div>
                     <div className='user-dropdown'>
                         <img src={User} className='user-icon' width="35px" height="35px" onClick={toggleDropdown} />
@@ -82,12 +82,16 @@ function Header() {
                             <ul className="dropdown-login">
                                 {isLoggedIn ? (
                                     <>
-                                        <div className='islogin' onClick={toggleDropdown} >
-                                            <Link to="/my-account">My account</Link>
-                                        </div>
-                                        <div className='islogin' onClick={toggleDropdown} >
-                                            <Link to="/my-order">My order</Link>
-                                        </div>
+                                        {
+                                            !isAdmin && <>
+                                                <div className='islogin' onClick={toggleDropdown} >
+                                                    <Link to="/my-account">My account</Link>
+                                                </div>
+                                                <div className='islogin' onClick={toggleDropdown} >
+                                                    <Link to="/my-order">My order</Link>
+                                                </div>
+                                            </>
+                                        }
                                         <div className='islogin' onClick={LogOut} >
                                             <Link to="/">Logout</Link>
                                         </div>
@@ -105,15 +109,17 @@ function Header() {
                             </ul>
                         )}
                     </div>
-                    <div className='cart-icon'>
-                        {isLoggedIn && <span>{amount}</span>}
-                        {
-                            token ? <Link to="/cart">
-                                <img src={Cart} alt="" width="30" />
-                            </Link> : <img src={Cart} alt="" width="30" onClick={displayAlert} />
-                        }
+                    {
+                        !isAdmin && <div className='cart-icon'>
+                            {isLoggedIn && <span>{amount}</span>}
+                            {
+                                token ? <Link to="/cart">
+                                    <img src={Cart} alt="" width="30" />
+                                </Link> : <img src={Cart} alt="" width="30" onClick={displayAlert} />
+                            }
 
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
             <div className='navbar'>
@@ -186,9 +192,20 @@ function Header() {
 
                 <div className='category'>
                     <Link to="/tip">
-                        <button class="dropbtn">Tips for your skin</button>
+                        <button class="dropbtn">
+                            {isAdmin ? "Create Blog" : "Tips for your skin"}
+                        </button>
                     </Link>
                 </div>
+                {
+                    isAdmin && <div className='category'>
+                    <Link to="/my-order">
+                        <button class="dropbtn">
+                        Order Management
+                        </button>
+                    </Link>
+                </div>
+                }
             </div>
         </header>
     )

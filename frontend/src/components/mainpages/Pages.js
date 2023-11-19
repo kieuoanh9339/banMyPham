@@ -15,6 +15,8 @@ import MyOrder from './order/MyOrder'
 import Payment from './checkout/Payment'
 import MyProfile from './myProfile/MyProfile'
 import Tip from './tip/Tip'
+import BlogDetail from './tip/BlogDetail'
+import CreateBlog from '../createBlog/CreateBlog'
 import test from './ProductDetail/test'
 function Pages(){
     return (
@@ -34,7 +36,9 @@ function Pages(){
             <Route path='/checkout' exact Component={Payment}/>
             <Route path='/my-account' exact Component={MyProfile}/>
             <Route path='/tip' exact Component={Tip}/>
-
+            <Route path='/blog/:id' exact Component={BlogDetail}/>
+            <Route path='/create-blog' exact Component={CreateBlog}/>
+            <Route path='/edit_blog/:id' exact Component={CreateBlog}/>
        </Routes>
     )
 }

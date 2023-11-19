@@ -76,7 +76,7 @@ const productCtrl = {
     getAll: async (req, res) => {
         try {
 
-            const features = new APIfeatures(Product.find(), req.query).filtering().sorting().paginating()
+            const features = new APIfeatures(Product.find({deletedAt: null}), req.query).filtering().sorting().paginating()
             const products = await features.query
             res.status(200).json({
                 status: "success",
@@ -87,31 +87,6 @@ const productCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
-    // getById: async (req,res) =>{
-    //     try{
-    //         const product = await Product.findById(req.params.id);
-    //         res.status(200).json({ message: "Get data successfully", data: product });
-    //     }catch(err){
-    //         return res.status(500).json({msg: err.message})
-    //     }
-    // },
-    // getByName: async (req,res) =>{
-    //     try{
-    //         const { product_name } = req.body;
-    //         const product = await Product.find(req.query);
-    //         res.status(200).json({ message: "Get data success!", data: product });
-    //     }catch(err){
-    //         return res.status(500).json({msg: err.message})
-    //     }
-    // },
-    // getByCategory: async (req,res) =>{
-    //     try{
-    //         const product = await Product.find({ category: req.body.category });
-    //         res.status(200).json({ message: "Search success", data: product });
-    //     }catch(err){
-    //         return res.status(500).json({msg: err.message})
-    //     }
-    // },
     createProduct: async (req, res) => {
         try {
             const { product_name, price, desc, images, category, inventory, skinType } = req.body
@@ -198,7 +173,9 @@ const productCtrl = {
     },
     deleteProduct: async (req, res) => {
         try {
-            await Product.findByIdAndDelete(req.params.id)
+            const product = await Product.findById(req.params.id);
+            product.deletedAt = Date.now();
+            await product.save();
             res.status(200).json({ msg: "Delete product successfully" });
         } catch (err) {
             return res.status(500).json({ msg: err.message })

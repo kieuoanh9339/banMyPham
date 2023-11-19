@@ -93,7 +93,7 @@ function CartShoppingItem({ cartItem, isCart,setSl }) {
                     to={`/product/detail/`}
                     style={{ textDecoration: "none" }}
                 >
-                    <img src={cartItem?.product.images.url} className="cart-item-img" />
+                    <img src={cartItem?.product?.images.url} className="cart-item-img" />
                 </Link>
             
             <div className='cart-item-infor'>

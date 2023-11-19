@@ -18,10 +18,12 @@ function ProductDetail() {
 
     useEffect(() => {
         if (params.id) {
-            products.forEach(product => {
-                if (product._id === params.id) { setDetailProduct(product) }
+            // products.forEach(product => {
+            //     if (product._id === params.id) { setDetailProduct(product) }
 
-            })
+            // })
+            const product_detail=products.find(p => p._id === params.id);
+            setDetailProduct(product_detail)
         }
     }, [products, params.id])
     let a = detailProduct._id
@@ -100,7 +102,7 @@ function ProductDetail() {
                     </div>
                     <div className='detail-product-description'>
                         <div className='title-desc'>Description: </div>
-                        <div>{detailProduct.desc} </div>
+                        <div dangerouslySetInnerHTML={{__html: detailProduct.desc}}></div>
                     </div>
                 </div>
                 <div className='add-product-quality-cart'>

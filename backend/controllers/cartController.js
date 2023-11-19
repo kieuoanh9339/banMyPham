@@ -78,7 +78,7 @@ module.exports = {
         try {
             const cartId = req.params.id;
             let cart = await Cart.findById(cartId)
-                .populate({ path: "items", populate: { path: "product", select: selectProduct } });
+                .populate({ path: "items", populate: { path: "product", select: selectProduct }});
             
             res.status(200).json({
                 status: "success",
@@ -133,13 +133,14 @@ module.exports = {
             const cartId = req.params.id;
             const activeCart = await Cart.findById(cartId);
             activeCart.status = "checkouted";
-            await activeCart.save()
             for (item of activeCart.items) {
                 const product = await Product.findById(item.product);
                 product.sold += item.amount;
                 product.inventory -= item.amount;
+                item.boughtProductPrice = product.price;
                 await product.save();
             }
+            await activeCart.save()
             res.status(200).json({
                 status: "success",
                 cart: activeCart,

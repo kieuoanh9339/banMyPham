@@ -100,7 +100,7 @@ function OrderItem({ order, isAdmin }) {
                                 </div>
                                 <div className='cart-item-select'>
                                     <div className="cart-item-price">
-                                        <p> ${item.product.price} <i style={{ marginRight: "5px" }}>x</i> {item.amount}</p>
+                                        <p> ${item.boughtProductPrice} <i style={{ marginRight: "5px" }}>x</i> {item.amount}</p>
                                     </div>
                                 </div>
                             </div>

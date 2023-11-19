@@ -24,6 +24,10 @@ const cartSchema= new mongoose.Schema({
             amount: {
                 type: Number,
                 default: 1
+            },
+            boughtProductPrice: {
+                type: Number,
+                default: null
             }
         }
     ]

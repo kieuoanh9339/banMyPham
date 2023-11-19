@@ -44,19 +44,19 @@ function CreateProduct() {
     const [products, setProducts] = state.productAPI.products
     const [onEdit, setOnEdit] = useState(false)
     const [callback, setCallback] = state.productAPI.callback
+    const [inited, setInited] = useState(false)
+
     useEffect(() => {
         if (param.id) {
             setOnEdit(true)
-            products.forEach(p => {
-                
-                if (p._id === param.id) {
-                    // console.log(p)
-                    setProduct(p)
-                    setImages(p.images)
-                    console.log(product)
-                }
-            })
-            
+
+            const beProduct = products.find(p => p._id === param.id);
+            if (!beProduct) return;
+            setProduct(beProduct)
+            setImages(beProduct.images)
+            setInited(true)
+
+
         } else {
             setOnEdit(false)
             setImages(false)
@@ -113,7 +113,7 @@ function CreateProduct() {
     const onChangeInput = (name, value) => {
         setProduct({ ...product, [name]: value })
     }
-    
+
     // console.log(product)
 
     const styleUpload = {
@@ -188,7 +188,7 @@ function CreateProduct() {
                 <div className="create-product-desc">
                     <label htmlFor="content">Description</label>
                     <ReactQuill modules={modules}
-                        formats={formats} value={product.desc} onChange={(e) => onChangeInput("desc", e)} />
+                        formats={formats} value={product.desc} onChange={(e) => inited && onChangeInput("desc", e)} />
                     {/* <textarea className="create-input" rows="10" type="text" value={product.desc} onChange={(e) => onChangeInput("desc", e.target.value)} /> */}
                 </div>
                 <div className="product-category">
