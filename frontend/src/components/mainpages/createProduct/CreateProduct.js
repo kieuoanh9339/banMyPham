@@ -161,7 +161,7 @@ function CreateProduct() {
         }
     }
 
-    const skin_type = [{ name: "Normal" }, { name: "Dry" }, { name: "Oily" },{name:"Combination"}]
+    const skin_type = [{ name: "Da thường" }, { name: "Da khô" }, { name: "Da dầu" },{name:"Da hỗn hợp"}]
 
 
     return (

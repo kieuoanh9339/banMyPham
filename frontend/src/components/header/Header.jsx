@@ -41,7 +41,8 @@ function Header() {
         alert("You should login")
     }
 
-    const skin_Type = ["Normal", "Oily", "Dry","Combo"]
+    // const skin_Type = ["Normal", "Oily", "Dry","Combo"]
+    const skin_Type = [{ name: "Da thường" }, { name: "Da khô" }, { name: "Da dầu" },{name:"Da hỗn hợp"}]
 
     // const changeFilter=(e) =>{
     //     setCategory('')
@@ -176,10 +177,10 @@ function Header() {
                                         {skin_Type.map(e => {
                                             return <Link to="/product" onClick={() => {
                                                 setCategory('')
-                                                setSkinType(e)
+                                                setSkinType(e.name)
                                                 setSearch('')
                                             }} >
-                                                <a>{e} Skin</a>
+                                                <a>{e.name} </a>
                                             </Link>
                                         })}
                                     </div>

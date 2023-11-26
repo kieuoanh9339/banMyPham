@@ -95,7 +95,7 @@ function ProductDetail() {
                         <div className='tilte-skintype'>
                             Loại da:
                         </div>
-                        <div> {detailProduct.skinType} Skin</div>
+                        <div> {detailProduct.skinType}</div>
                     </div>
                     <div className='detail-product-description'>
                         <div className='title-desc'>Mô tả: </div>
