@@ -76,18 +76,18 @@ function CreateBlog() {
     return (
         <div className="create-blog" style={{ maxWidth: "700px", margin: "20px auto" }}>
             <div className="create-titel">
-                <label htmlFor="title" style={{ marginRight: "10px" }}>Title</label>
+                <label htmlFor="title" style={{ marginRight: "10px" }}>Tiêu đề</label>
                 <input className="create-input" type="text" value={blog.title} onChange={(e) => onChangeInput("title", e.target.value)} style={{ padding: "5px", width: "100%" }}
                 />
             </div>
 
             <div className="create-product-desc">
-                <label htmlFor="content" style={{ marginBottom: "10px" }}>Description</label>
+                <label htmlFor="content" style={{ marginBottom: "10px" }}>Mô tả</label>
                 <ReactQuill modules={modules}
                     formats={formats} value={blog.content} onChange={(e) => inited && onChangeInput("content", e)} />
                 {/* <textarea className="create-input" rows="10" type="text" value={product.desc} onChange={(e) => onChangeInput("desc", e.target.value)} /> */}
             </div>
-            <button className='btn-create' onClick={handleSubmit}> {onEdit ? "Update" : "Create Blog"} </button>
+            <button className='btn-create' onClick={handleSubmit}> {onEdit ? "Update" : "Tạo Blog"} </button>
         </div>
 
     )

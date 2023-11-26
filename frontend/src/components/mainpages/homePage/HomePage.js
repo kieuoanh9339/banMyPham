@@ -36,7 +36,7 @@ function HomePage() {
 
             <div className='title'>
                 <h1>
-                    Shop Customer Favorites
+                    Sản phẩm được yêu thích
                 </h1>
             </div>
 
@@ -61,7 +61,7 @@ function HomePage() {
                     <img src={cs1} />
                     <div >
                         <button className='btn-category'>
-                            SERUM
+                            RETINOL
                         </button>
                     </div>
                 </div>
@@ -71,14 +71,14 @@ function HomePage() {
             </div>
             <div className='select-tip'>
                 <div className='find-pro'>
-                    Find Your Right Product:
+                    Tìm kiếm sản phẩm của bạn
                 </div>
                 <div className='looking-for'>
-                    <h3>I have </h3>
+                    <h3>Tôi có </h3>
                     <select name="Skin Tpye" className='select-skin' onChange={(e) => { 
                         setSkinType(e.target.value)
                      }}>
-                        <option value="">Skin Type</option>
+                        <option value="">Loại da</option>
                         {
                             skin_type.map(c => (
                                 <option value={c} >
@@ -87,9 +87,9 @@ function HomePage() {
                             ))
                         }
                     </select>
-                    <h3>& I'm looking for</h3>
+                    <h3>& Tôi đang tìm kiếm</h3>
                     <select name="Product Tpye" className='select-product' onChange={(e) => { setCategory(e.target.value) }}>
-                        <option value="">Product Type</option>
+                        <option value="">Loại sản phẩm</option>
                         {
                             categories.map(c => (
                                 <option value={c.name}>
@@ -103,14 +103,14 @@ function HomePage() {
 
                 <Link to="product">
                     <button className='btnFind' >
-                        FIND SOLUTIONS
+                        Tìm kiếm giải pháp
                     </button>
                 </Link>
 
             </div>
             <div className='title-new-product'>
                 <h1>
-                    New Products
+                    Các sản phẩm mới
                 </h1>
             </div>
 

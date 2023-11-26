@@ -48,13 +48,13 @@ function ProductItem({ product, isAdmin }) {
                             <Link  to={`/edit_product/${product._id}`}>
                                 <div>
                                     <button className='btnEdit'>
-                                        EDIT
+                                        CẬP NHẬT
                                     </button>
                                 </div>
                             </Link>
                             <div>
                                 <button className='btnDel' onClick={()=>deleteProduct(product._id, product.images.public_id)}>
-                                    DELETE
+                                    XOÁ
                                 </button>
                             </div>
                         </div>
@@ -62,7 +62,7 @@ function ProductItem({ product, isAdmin }) {
                     ) : (
                         <Link to={`/product/${product._id}`} >
                             <button className='btnBuy'>
-                                VIEW
+                                CHI TIẾT
                             </button>
                         </Link>
                     )

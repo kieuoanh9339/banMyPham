@@ -6,7 +6,8 @@ const selectProduct = {
     price: 1,
     images: 1,
     inventory: 1,
-    category: 1
+    category: 1,
+    deletedAt: 1,
 }
 
 module.exports = {
@@ -15,7 +16,7 @@ module.exports = {
         try {
             const userId = req.user.id;
 
-            let activeCart = await Cart.findOne({ $and: [{ userId: userId }, { status: "active" }] });
+            let activeCart = await Cart.findOne({ $and: [{ userId: userId }, { status: "active" }] })
 
             const { quantity } = req.body;
             const _product = await Product.findById(req.body.product);
@@ -28,7 +29,7 @@ module.exports = {
                         activeCart.items[index].amount += quantity;
                     } else {
                         const tmp = _product.inventory - activeCart.items[index].amount
-                        return res.status(400).json({ msg: `Number of products that can be added: ` + tmp });
+                        return res.status(400).json({ msg: `Number of products that can be added: ` + tmp })
                     }
 
                 } else {
@@ -43,8 +44,7 @@ module.exports = {
                 if (_product.inventory < quantity) {
                     return res.status(400).json({ msg: `Not enough product` });
                 }
-                const cart = { userId: userId, status: "active", items: [{ product: req.body.product, amount: quantity }], totalPrice: _product.price * quantity };
-                
+                const cart = { userId: userId, status: "active", items: [{ product: req.body.product, amount: quantity }], totalPrice: _product.price * quantity }
                 activeCart = await Cart.create(cart);
             }
 
@@ -65,6 +65,18 @@ module.exports = {
             if (!activeCart) {
                 const cart = { userId: userId, status: "active", items: [], totalPrice: 0 };
                 activeCart = await Cart.create(cart);
+            }
+            let needUpdate = false;
+            for (let index = activeCart.items.length - 1; index >= 0; index--) {
+                console.log(activeCart.items[index]);
+                if (activeCart.items[index].product.deletedAt) {
+                    activeCart.totalPrice -= activeCart.items[index].product.price * activeCart.items[index].amount;
+                    activeCart.items.splice(index, 1);
+                    needUpdate = true;
+                }
+            }
+            if (needUpdate) {
+                await activeCart.save();
             }
             res.status(200).json({
                 status: "success",

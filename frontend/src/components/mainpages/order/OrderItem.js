@@ -63,7 +63,7 @@ function OrderItem({ order, isAdmin }) {
             {isCancel && <Popup setIsCancel={setIsCancel} orderId={order._id} isAdmin={isAdmin} setCallback={setCallback} callback={callback} />}
             <div className='date-status'>
                 <div className='date-ordered'>
-                    <div className='label-date-order'><p>DATE:</p></div>
+                    <div className='label-date-order'><p>Ngày:</p></div>
                     <div className='pricce-total-order'><p>{formattedDate}</p></div>
                 </div>
                 <div className='status-order'>
@@ -72,13 +72,13 @@ function OrderItem({ order, isAdmin }) {
             </div>
             {isAdmin && <div className='infor-user-order'>
                 <div className='order_user-name' style={{ padding: "12px 24px", display: "flex" }}>
-                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Name: </p><p>{order?.user?.fullname}</p>
+                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Tên: </p><p>{order?.user?.fullname}</p>
                 </div>
                 <div className='order_user-address' style={{ padding: "12px 24px", display: "flex" }}>
-                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Address: </p><p>{order?.user?.address}</p>
+                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Địa chỉ: </p><p>{order?.user?.address}</p>
                 </div>
                 <div className='order_user-phone' style={{ padding: "12px 24px", display: "flex" }}>
-                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Phone Number: </p><p>{order?.user?.phonenumber}</p>
+                    <p style={{ fontWeight: "bold", paddingRight: "10px" }}>Số điện thoại: </p><p>{order?.user?.phonenumber}</p>
                 </div>
             </div>}
             <div className='list-item-product-order'>
@@ -115,7 +115,7 @@ function OrderItem({ order, isAdmin }) {
             <div className='total-status'>
                 <div>
                     <div className="total-order">
-                        <div className='label-total-order'><p>TOTAL:</p></div>
+                        <div className='label-total-order'><p>Tổng:</p></div>
                         <div className='pricce-total-order'><p>${price}</p></div>
 
                     </div>

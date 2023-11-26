@@ -14,7 +14,8 @@ router.route("/:id")
 .put(auth, orderCtrl.update)
 .delete(auth, orderCtrl.delete);
 
-
+router.route("/statistic/revenue")
+.get(auth, orderCtrl.statisticRevenue);
 
 
 module.exports = router;

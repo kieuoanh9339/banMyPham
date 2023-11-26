@@ -23,8 +23,7 @@ function UserAPI(token) {
                     }
                     
                 } catch (err) {
-                    // console.log(err.response)
-                    // alert(err)
+                    console.log(err.response)
                 }
             }
             getUser()

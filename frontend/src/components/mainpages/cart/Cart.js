@@ -21,7 +21,7 @@ function Cart() {
       </div>
       <div className='cart-summary'>
         <div className='tilte-cart-summary'>
-          Estimate Tax & Shipping
+          Ước tính tổng tiền 
         </div>
         <div className="cart-subtotal">
           <div className='label-subtotal'><p>Subtotal:</p></div>
@@ -38,7 +38,7 @@ function Cart() {
         <div className='btnCheckout'>
           <Link to="/checkout">
             <button className='btnCheckout-detail'>
-              CHECKOUT
+              Thanh toán
             </button>
           </Link>
         </div>

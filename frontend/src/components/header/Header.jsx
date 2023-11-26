@@ -41,7 +41,7 @@ function Header() {
         alert("You should login")
     }
 
-    const skin_Type = ["Normal", "Oily", "Dry"]
+    const skin_Type = ["Normal", "Oily", "Dry","Combo"]
 
     // const changeFilter=(e) =>{
     //     setCategory('')
@@ -85,7 +85,7 @@ function Header() {
                                         {
                                             !isAdmin && <>
                                                 <div className='islogin' onClick={toggleDropdown} >
-                                                    <Link to="/my-account">My account</Link>
+                                                    <Link to="/my-account">Accout</Link>
                                                 </div>
                                                 <div className='islogin' onClick={toggleDropdown} >
                                                     <Link to="/my-order">My order</Link>
@@ -127,7 +127,7 @@ function Header() {
                     {
                         !isAdmin ? (
                             <div class="dropdown">
-                                <div class="dropbtn">Category</div>
+                                <div class="dropbtn">Loại sản phẩm</div>
                                 {
                                     !isAdmin ? (<div>
                                         <div class="dropdown-content">
@@ -150,7 +150,7 @@ function Header() {
                         ) : (
                             <Link to="/create-category">
                                 <div className='dropdown'>
-                                    <div className='dropbtn'>Category</div>
+                                    <div className='dropbtn'>Danh mục</div>
                                 </div>
                             </Link>
                         )
@@ -162,14 +162,14 @@ function Header() {
                         setSkinType('')
                         setSearch('')
                     }}>
-                        <button class="dropbtn" >Product</button>
+                        <button class="dropbtn" >Sản phẩm</button>
                     </Link>
                 </div>
                 {
                     !isAdmin ? (<div className='skin-type' >
 
                         <div class="dropdown">
-                            <button class="dropbtn">Skin Type</button>
+                            <button class="dropbtn">Loại da</button>
                             {
                                 !isAdmin ? (<div>
                                     <div class="dropdown-content">
@@ -193,7 +193,7 @@ function Header() {
                 <div className='category'>
                     <Link to="/tip">
                         <button class="dropbtn">
-                            {isAdmin ? "Create Blog" : "Tips for your skin"}
+                            {isAdmin ? "Tạo Blog" : "Xu hướng làm đẹp"}
                         </button>
                     </Link>
                 </div>
@@ -201,7 +201,7 @@ function Header() {
                     isAdmin && <div className='category'>
                     <Link to="/my-order">
                         <button class="dropbtn">
-                        Order Management
+                        Quản lý đơn hàng
                         </button>
                     </Link>
                 </div>

@@ -18,10 +18,6 @@ function ProductDetail() {
 
     useEffect(() => {
         if (params.id) {
-            // products.forEach(product => {
-            //     if (product._id === params.id) { setDetailProduct(product) }
-
-            // })
             const product_detail=products.find(p => p._id === params.id);
             setDetailProduct(product_detail)
         }
@@ -38,11 +34,12 @@ function ProductDetail() {
         const res = await axios.post("/carts", { ...cart }, {
             headers: { Authorization: token }
         })
+        console.log(res)
         if(res.status == 400) {
             alert(res.data.msg)
             check=1
         } 
-        if(res.status == 200  || check==0){
+        if(res.status === "success" ){
             window.location.href = "/cart"
             alert("them thanh cong")
         }
@@ -96,12 +93,12 @@ function ProductDetail() {
                     </div>
                     <div className='detail-product-skintype'>
                         <div className='tilte-skintype'>
-                            Skin type:
+                            Loại da:
                         </div>
                         <div> {detailProduct.skinType} Skin</div>
                     </div>
                     <div className='detail-product-description'>
-                        <div className='title-desc'>Description: </div>
+                        <div className='title-desc'>Mô tả: </div>
                         <div dangerouslySetInnerHTML={{__html: detailProduct.desc}}></div>
                     </div>
                 </div>
@@ -130,7 +127,7 @@ function ProductDetail() {
                     <div className='detail-add-to-cart'>
                         <Link >
                             <button className='btnLogin' onClick={(e) => onClickSubmit(e)}>
-                                ADD TO CART
+                                Thêm sản phẩm
                             </button>
                         </Link>
                     </div>

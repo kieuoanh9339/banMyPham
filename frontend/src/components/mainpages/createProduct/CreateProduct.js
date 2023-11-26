@@ -60,6 +60,7 @@ function CreateProduct() {
         } else {
             setOnEdit(false)
             setImages(false)
+            setInited(true)
             setProduct({
                 product_name: "",
                 price: 0,
@@ -85,12 +86,17 @@ function CreateProduct() {
                 console.log(res)
                 if (res.status === 400) {
                     alert(res.data)
-                } else alert(res.message)
+                } else{ alert(res.message);  navigate('/product')}
+               
             } else {
                 const res = await axios.post('/product', { ...product, images }, {
                     headers: { Authorization: token }
                 })
                 console.log(res)
+                if (res.status === 400) {
+                    alert(res.data)
+                } else{ alert(res.message) ;  navigate('/product')}
+
             }
 
             setImages(false)
@@ -104,7 +110,7 @@ function CreateProduct() {
 
             })
             setCallback(!callback)
-            navigate('/product')
+            
         } catch (err) {
             alert(err.response.data.msg)
         }
@@ -155,7 +161,7 @@ function CreateProduct() {
         }
     }
 
-    const skin_type = [{ name: "Normal" }, { name: "Dry" }, { name: "Oily" }]
+    const skin_type = [{ name: "Normal" }, { name: "Dry" }, { name: "Oily" },{name:"Combination"}]
 
 
     return (
@@ -169,33 +175,33 @@ function CreateProduct() {
             </div>
             <form>
                 <div className="create-product-name">
-                    <label htmlFor="product_name">Name</label>
+                    <label htmlFor="product_name">Tên sản phẩm</label>
                     <input className="create-input" type="text" value={product.product_name} onChange={(e) => onChangeInput("product_name", e.target.value)}
                     />
                 </div>
 
                 <div className="create-product-price">
-                    <label htmlFor="price">Price</label>
+                    <label htmlFor="price">Giá</label>
                     <input className="create-input" type="number" value={product.price} onChange={(e) => onChangeInput("price", parseInt(e.target.value))}
                     />
                 </div>
                 <div className="create-product-price">
-                    <label htmlFor="price">Inventory</label>
+                    <label htmlFor="price">Số lượng</label>
                     <input className="create-input" type="number" value={product.inventory} onChange={(e) => onChangeInput("inventory", parseInt(e.target.value))}
                     />
                 </div>
 
                 <div className="create-product-desc">
-                    <label htmlFor="content">Description</label>
+                    <label htmlFor="content">Mô tả</label>
                     <ReactQuill modules={modules}
                         formats={formats} value={product.desc} onChange={(e) => inited && onChangeInput("desc", e)} />
                     {/* <textarea className="create-input" rows="10" type="text" value={product.desc} onChange={(e) => onChangeInput("desc", e.target.value)} /> */}
                 </div>
                 <div className="product-category">
-                    <label htmlFor="category" className='label-cate'>Category</label>
+                    <label htmlFor="category" className='label-cate'>Danh mục</label>
                     <select name="category" id="category"
                         value={product.category} onChange={(e) => onChangeInput("category", e.target.value)}>
-                        <option value="">Product Type</option>
+                        <option value="">Loại sản phẩm</option>
                         {
                             categories.map(c => (
                                 <option value={c.name}>
@@ -206,10 +212,10 @@ function CreateProduct() {
                     </select>
                 </div>
                 <div className="product-skintype">
-                    <label htmlFor="category" className='label-cate' >Skin type</label>
+                    <label htmlFor="category" className='label-cate' >Loại da</label>
                     <select name="category" id="category"
                         value={product.skinType} onChange={(e) => onChangeInput("skinType", e.target.value)}>
-                        <option value="">SKin Type</option>
+                        <option value="">Loại da</option>
                         {
                             skin_type.map(c => (
                                 <option value={c.name}>
@@ -219,7 +225,7 @@ function CreateProduct() {
                         }
                     </select>
                 </div>
-                <button onClick={handleSubmit}> {onEdit ? "Edit Product" : "Create Product"}</button>
+                <button onClick={handleSubmit}> {onEdit ? "Sửa sản phẩm" : "Tạo sản phẩm"}</button>
             </form>
 
         </div>

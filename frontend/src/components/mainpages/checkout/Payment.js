@@ -59,6 +59,7 @@ function Payment() {
                     pay.orderId = res1.data._id
                     const res2 = await axios.post("/payment/create_payment_url", { ...pay })
                     window.location.href = res2
+                    console.log(res2);
                 }
             }
         } catch (e) {

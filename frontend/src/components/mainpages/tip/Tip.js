@@ -11,10 +11,16 @@ import "./Tip.css"
 import axios from '../../../API/AxiosConfig'
 import { GlobalState } from '../../../GlobalState'
 import { Link } from 'react-router-dom'
+import ProductItem from '../../utils/productItem/ProductItem'
 function Tip() {
     const state = useContext(GlobalState)
     const [isAdmin] = state.userAPI.isAdmin
     const [blog, setBlog] = useState([])
+    const [display, setDisplay] = useState("")
+    const [click, setClick] = useState(false)
+    const [skinType, setSkinType] = state.productAPI.skinType
+    const [products] = state.productAPI.products
+
     useEffect(() => {
         const getBlog = async () => {
             const res = await axios.get("/blog")
@@ -29,86 +35,113 @@ function Tip() {
                 isAdmin ? <></> : <>
                     <div className='find-type'>
                         <div className='header-tip'>
-                            <h1>Find out your skin type</h1>
+                            <h1>Tìm hiểu loại da của bạn</h1>
                         </div>
                         <div className='desc-tip'>
-                            <i>Note: Wash your face with a gentle cleanser and wait 15 - 30 minutes. </i>
+                            <i>Note:Rửa mặt sạch bằng sữa rửa mặt dịu nhẹ và đợi 15 – 30 phút. Nhấp vào biểu tượng phù hợp với những gì bạn nhìn thấy </i>
                         </div>
                         <div className='type-skin'>
-                            <div className='infor-skin' >
+                            <div className='infor-skin' onClick={() => {
+                                setDisplay("Da của bạn là da khô. Có rất nhiều lý do khiến da bạn bị khô, nhưng đơn giản nhất là cảm giác căng, khó chịu liên quan đến loại da này xuất phát từ việc thiếu bã nhờn và lipid - những chất sáp chịu trách nhiệm giữ ẩm. Nhưng! Với các thành phần và công thức phù hợp, bạn có thể có được làn da mềm mại, được nuôi dưỡng.");
+                                setSkinType("Dry")
+                                setClick(true)
+                            }}>
+                                <input
+                                    type="radio"
+                                    name="cash"
+                                    value="cash"
+                                    
+                                />
                                 <div className='dry-skin'>
-                                    <div className='img-dry' >
-                                        <img src={Dry} style={{ maxWidth: "200px" }}></img>
+                                    
+                                    <div className='img-dry' style={{ maxWidth: "100px" }}>
+                                        <img src={Dry} style={{ maxWidth: "100px" }}></img>
                                     </div>
-                                    <div className='inf-dry'>Feels tight & dehydrated. Some flaky areas.</div>
+                                    <div className='inf-dry'>Cảm thấy căng và mất nước. Một số chỗ bong tróc.</div>
                                 </div>
                             </div>
-                            <div className='infor-skin'>
+                            <div className='infor-skin' onClick={() => {
+                                setDisplay("Da của bạn là da dầu. Loại da này xảy ra khi da tiết ra quá nhiều bã nhờn - chất sáp có thể khiến lỗ chân lông to và bóng nhờn quá mức. Nhưng! Với các thành phần và công thức phù hợp, bạn có thể có được làn da cân bằng, mịn màng.")
+                                setSkinType("Oily")
+                                setClick(true)
+                            }}>
+                                <input
+                                    type="radio"
+                                    name="cash"
+                                    value="cash"
+                                    
+                                />
                                 <div className='dry-skin'>
+                                    
                                     <div className='img-dry'>
-                                        <img src={Oily} style={{ maxWidth: "200px" }}></img>
+                                        <img src={Oily} style={{ maxWidth: "100px" }}></img>
                                     </div>
-                                    <div className='inf-dry'>Looks shiny & feels slick to the touch</div>
+                                    <div className='inf-dry'>Trông bóng và nhờn khi chạm vào</div>
                                 </div >
                             </div>
-                            <div className='infor-skin'>
+                            <div className='infor-skin' onClick={() => {
+                                setDisplay("Da của bạn là da hỗn hợp. Loại da siêu phổ biến này xảy ra khi một số bộ phận trên khuôn mặt tiết ra quá nhiều bã nhờn (chất sáp giữ ẩm cho da) và các bộ phận khác không sản xuất đủ. Với sự kết hợp phù hợp giữa các thành phần và công thức, bạn có thể có làn da khỏe mạnh, cân bằng hơn.")
+                                setSkinType("Normal")
+                                setClick(true)
+                            }}>
+                                <input
+                                    type="radio"
+                                    name="cash"
+                                    value="cash"
+                                    
+                                />
                                 <div className='dry-skin'>
+                                    
                                     <div className='img-dry'>
-                                        <img src={Normal} style={{ maxWidth: "200px" }} ></img>
+                                        <img src={Normal} style={{ maxWidth: "100px" }} ></img>
                                     </div>
-                                    <div className='inf-dry'>Feels smooth, balanced & healthy.</div>
+                                    <div className='inf-dry'>Cảm thấy mịn màng, cân bằng và khỏe mạnh</div>
                                 </div>
                             </div>
-                            <div className='infor-skin'>
+                            <div className='infor-skin' onClick={() => {
+                                setDisplay("Da của bạn là da thường. Xin chúc mừng, bạn đã trúng số độc đắc về mặt di truyền! Loại da hiếm gặp này có tỷ lệ dầu-nước phù hợp, giữ cho da mịn màng, trong trẻo và cân bằng hoàn hảo. Bảo vệ và phòng ngừa là chìa khóa để giữ mọi thứ ở trạng thái trung tính tự nhiên.")
+                                setSkinType("Combination")
+                                setClick(true)
+                            }}>
+                                <input
+                                    type="radio"
+                                    name="cash"
+                                    value="cash"
+                                    
+                                />
                                 <div className='dry-skin'>
+                                    
                                     <div className='img-dry'>
-                                        <img src={Combo} style={{ maxWidth: "200px" }} ></img>
+                                        <img src={Combo} style={{ maxWidth: "100px" }} ></img>
                                     </div>
-                                    <div className='inf-dry'>Looks dry in some areas, but shiny in others. Particularly the T-zone (forehead, nose, & chin) Feels smooth, balanced & healthy.</div>
+                                    <div className='inf-dry'>Cảm thấy bóng nhờ ở vùng chữ T nhưng khô ở vùng khác.</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='find-type'>
-                        <div className='header-tip'>
-                            <h1>What’s your main concern?</h1>
-                        </div>
+                        {
+                            click && <div className='display-typeSkin' >
+                                <h2>Kết quả da của bạn</h2>
+                                <p >{display}</p>
+                            </div>
+                        }
+                        {
+                            click && <>
+                                <div style={{ marginLeft: "100px", fontWeight: "bold", paddingTop: "10px" }}>
+                                    Một số sản phẩm dành cho bạn:
+                                </div>
+                                <div className='list-products'>
 
-                        <div className='type-skin'>
-                            <div className='infor-skin' >
-                                <div className='dry-skin'>
-                                    <div className='img-dry' >
-                                        <img src={Acne} style={{ maxWidth: "200px" }}></img>
-                                    </div>
-                                    <div className='inf-dry'>Breakouts, blackheads or clogged pores</div>
+                                    {
+                                        products?.map(product => {
+                                            return <ProductItem key={product._id} product={product} isAdmin={isAdmin} />
+                                        })
+                                    }
                                 </div>
-                            </div>
-                            <div className='infor-skin'>
-                                <div className='dry-skin'>
-                                    <div className='img-dry'>
-                                        <img src={Aging} style={{ maxWidth: "200px" }}></img>
-                                    </div>
-                                    <div className='inf-dry'>Aging, loss of firmness or wrinkles</div>
-                                </div >
-                            </div>
-                            <div className='infor-skin'>
-                                <div className='dry-skin'>
-                                    <div className='img-dry'>
-                                        <img src={Uneven} style={{ maxWidth: "200px" }} ></img>
-                                    </div>
-                                    <div className='inf-dry'>Uneven skin tone or discoloration</div>
-                                </div>
-                            </div>
-                            <div className='infor-skin'>
-                                <div className='dry-skin'>
-                                    <div className='img-dry'>
-                                        <img src={Sensitive} style={{ maxWidth: "200px" }} ></img>
-                                    </div>
-                                    <div className='inf-dry'>Redness or sensitivity</div>
-                                </div>
-                            </div>
-                        </div>
+                            </>
+                        }
+
                     </div>
+
                 </>
             }
             <div className='blog'>
@@ -116,13 +149,13 @@ function Tip() {
                     {
                         isAdmin && (<Link to="/create-blog">
                             <button className='btnCreate'>
-                                Create Blog
+                                Tạo Blog
                             </button>
                         </Link>)
                     }
                 </div>
                 <div className='header-tip'>
-                    <h1>List Blog</h1>
+                    <h1>Danh sách Blog</h1>
                 </div>
                 <div className='list-blog'>
                     {

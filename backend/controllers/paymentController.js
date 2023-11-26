@@ -8,10 +8,6 @@ const paymentController = {
             req.connection.remoteAddress ||
             req.socket.remoteAddress ||
             req.connection.socket.remoteAddress;
-
-        
-
-
         var tmnCode = "9KTXV34S";
         var secretKey = "LSNHVMPQPGMJKAGHKVVIBDLHVHNXFFFV";
         var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
