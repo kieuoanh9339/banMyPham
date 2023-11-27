@@ -13,8 +13,20 @@ const selectProduct = {
 module.exports = {
 
     get: async (req, res) => {
+        const status = req.query.status;
         try {
-            const orders = await Order.find()
+            let orders;
+            if (status) {
+                const listStatus = status.split(",");
+                orders = Order.find({
+                    status: {
+                        "$in": listStatus
+                    }
+                });
+            } else {
+                orders = Order.find()
+            }
+            orders = await orders
                 .populate({
                     path: 'cart',
                     populate: {

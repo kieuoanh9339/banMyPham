@@ -21,7 +21,7 @@ function Products() {
                     {
                         isAdmin&&(<Link to="/create-product">
                         <button className='btnCreate'>
-                            Create Product
+                            Thêm sản phẩm
                         </button>
                     </Link>)
                     }

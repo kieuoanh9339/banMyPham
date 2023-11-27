@@ -18,6 +18,10 @@ function Tip() {
     const [blog, setBlog] = useState([])
     const [display, setDisplay] = useState("")
     const [click, setClick] = useState(false)
+    const [oily, setOily]= useState(false)
+    const [dry, setDry]= useState(false)
+    const [normal, setNormal]= useState(false)
+    const [combo, setCombo]= useState(false)
     const [skinType, setSkinType] = state.productAPI.skinType
     const [products] = state.productAPI.products
 
@@ -41,17 +45,15 @@ function Tip() {
                             <i>Note:Rửa mặt sạch bằng sữa rửa mặt dịu nhẹ và đợi 15 – 30 phút. Nhấp vào biểu tượng phù hợp với những gì bạn nhìn thấy </i>
                         </div>
                         <div className='type-skin'>
-                            <div className='infor-skin' onClick={() => {
+                            <div className='infor-skin' style={{border: dry?"2px solid":"none"}} onClick={() => {
                                 setDisplay("Da của bạn là da khô. Có rất nhiều lý do khiến da bạn bị khô, nhưng đơn giản nhất là cảm giác căng, khó chịu liên quan đến loại da này xuất phát từ việc thiếu bã nhờn và lipid - những chất sáp chịu trách nhiệm giữ ẩm. Nhưng! Với các thành phần và công thức phù hợp, bạn có thể có được làn da mềm mại, được nuôi dưỡng.");
                                 setSkinType("Da khô")
                                 setClick(true)
+                                setDry(true)
+                                setOily(false)
+                                setNormal(false)
+                                setCombo(false)
                             }}>
-                                <input
-                                    type="radio"
-                                    name="cash"
-                                    value="cash"
-                                    
-                                />
                                 <div className='dry-skin'>
                                     
                                     <div className='img-dry' style={{ maxWidth: "100px" }}>
@@ -60,17 +62,15 @@ function Tip() {
                                     <div className='inf-dry'>Cảm thấy căng và mất nước. Một số chỗ bong tróc.</div>
                                 </div>
                             </div>
-                            <div className='infor-skin' onClick={() => {
+                            <div className='infor-skin' style={{border: oily?"2px solid":"none"}} onClick={() => {
                                 setDisplay("Da của bạn là da dầu. Loại da này xảy ra khi da tiết ra quá nhiều bã nhờn - chất sáp có thể khiến lỗ chân lông to và bóng nhờn quá mức. Nhưng! Với các thành phần và công thức phù hợp, bạn có thể có được làn da cân bằng, mịn màng.")
                                 setSkinType("Da dầu")
                                 setClick(true)
+                                setDry(false)
+                                setOily(true)
+                                setNormal(false)
+                                setCombo(false)
                             }}>
-                                <input
-                                    type="radio"
-                                    name="cash"
-                                    value="cash"
-                                    
-                                />
                                 <div className='dry-skin'>
                                     
                                     <div className='img-dry'>
@@ -79,17 +79,15 @@ function Tip() {
                                     <div className='inf-dry'>Trông bóng và nhờn khi chạm vào</div>
                                 </div >
                             </div>
-                            <div className='infor-skin' onClick={() => {
+                            <div className='infor-skin' style={{border: combo?"2px solid":"none"}} onClick={() => {
                                 setDisplay("Da của bạn là da hỗn hợp. Loại da siêu phổ biến này xảy ra khi một số bộ phận trên khuôn mặt tiết ra quá nhiều bã nhờn (chất sáp giữ ẩm cho da) và các bộ phận khác không sản xuất đủ. Với sự kết hợp phù hợp giữa các thành phần và công thức, bạn có thể có làn da khỏe mạnh, cân bằng hơn.")
                                 setSkinType("Da thường")
                                 setClick(true)
+                                setDry(false)
+                                setOily(false)
+                                setNormal(false)
+                                setCombo(true)
                             }}>
-                                <input
-                                    type="radio"
-                                    name="cash"
-                                    value="cash"
-                                    
-                                />
                                 <div className='dry-skin'>
                                     
                                     <div className='img-dry'>
@@ -98,17 +96,16 @@ function Tip() {
                                     <div className='inf-dry'>Cảm thấy mịn màng, cân bằng và khỏe mạnh</div>
                                 </div>
                             </div>
-                            <div className='infor-skin' onClick={() => {
+                            <div className='infor-skin' style={{border: normal?"2px solid":"none"}} onClick={() => {
                                 setDisplay("Da của bạn là da thường. Xin chúc mừng, bạn đã trúng số độc đắc về mặt di truyền! Loại da hiếm gặp này có tỷ lệ dầu-nước phù hợp, giữ cho da mịn màng, trong trẻo và cân bằng hoàn hảo. Bảo vệ và phòng ngừa là chìa khóa để giữ mọi thứ ở trạng thái trung tính tự nhiên.")
                                 setSkinType("Da hỗn hợp")
                                 setClick(true)
+                                setDry(false)
+                                setOily(false)
+                                setNormal(true)
+                                setCombo(false)
                             }}>
-                                <input
-                                    type="radio"
-                                    name="cash"
-                                    value="cash"
-                                    
-                                />
+                                
                                 <div className='dry-skin'>
                                     
                                     <div className='img-dry'>

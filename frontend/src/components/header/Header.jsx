@@ -151,7 +151,7 @@ function Header() {
                         ) : (
                             <Link to="/create-category">
                                 <div className='dropdown'>
-                                    <div className='dropbtn'>Danh mục</div>
+                                    <div className='dropbtn'>Loại sản phẩm</div>
                                 </div>
                             </Link>
                         )

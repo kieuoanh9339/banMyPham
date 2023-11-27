@@ -6,9 +6,10 @@ import "./MyOrder.css"
 function MyOrder() {
     const state = useContext(GlobalState)
     const [isAdmin] = state.userAPI.isAdmin
-    const [user, setUser]=state.userAPI.user
+    const [user, setUser] = state.userAPI.user
     const [orderByC, setOrderByC] = useState([])
-    
+    const [process, setProcess] = useState(true)
+
     useEffect(() => {
         const getOrders = async () => {
             if (isAdmin === false) {
@@ -16,26 +17,45 @@ function MyOrder() {
                 console.log(res.data)
                 setOrderByC(res.data)
             } else {
-                const res = await axios.get(`/orders`)
-                console.log(res)
-                setOrderByC(res.data)
+                console.log(process)
+                if (process) {
+                    const res = await axios.get(`/orders`)
+                    console.log(res)
+                    setOrderByC(res.data)
+                } else {
+                    const res = await axios.get(`/orders?status=01`)
+                    console.log(res)
+                    setOrderByC(res.data)
+                }
             }
         }
         getOrders()
-    }, [])
-
+    }, [process])
+    console.log(orderByC.reverse());
     return (
-        <div className='my-order'>
-            {
-                orderByC?.reverse()?.map(order => {
-                    return <>
-                       <OrderItem order ={order}  isAdmin={isAdmin} />
-                    </>
-                })
-            }
+        <div className='parent-order' style={{ display: "flex", justifyContent: "space-around" }}>
+            <div className='menu-order' style={{ marginTop: "20px", display: "block", justifyContent: "left", }}>
+                <div className='menu-process-order' style={{ margin: "10px", cursor: "pointer",color: process ? 'red' :'black'}} onClick={() => setProcess(true)}>
+                    Xử lý đơn hàng
+                </div>
+                <div className='menu-list-order' style={{ margin: "10px", cursor: "pointer",color: process===false ? 'red' :'black' }} onClick={() => setProcess(false)}>
+                    Danh sách đơn hàng
+                </div>
+            </div>
+            <div className='my-order'>
+                {
+                    
+                    orderByC?.reverse()?.map(order => {
+                        
+                        return <>
+                            <OrderItem order={order} isAdmin={isAdmin} process={process} />
+                        </>
+                    })
+                }
 
-           
 
+
+            </div>
         </div>
     )
 }

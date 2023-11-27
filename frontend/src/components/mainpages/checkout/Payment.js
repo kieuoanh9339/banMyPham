@@ -114,14 +114,14 @@ function Payment() {
         <div className="payment">
             <div className="payment-filling">
                 <div className="payment-delivery-infor">
-                    <h4 className="payment-title">Delivery information</h4>
+                    <h4 className="payment-title">Thông tin vận chuyển</h4>
                     <div className="payment-infor-user">
                         <div className="input">
                             <label
                                 className="p-label-checkout"
                                 style={{ color: "black" }}
                             >
-                                Full name:
+                                Họ và tên:
                             </label>
                             <br />
                             <input
@@ -136,7 +136,7 @@ function Payment() {
                                 className="p-label-checkout"
                                 style={{ color: "black" }}
                             >
-                                Phone Number:
+                                Số điện thoại:
                             </label>
                             <br />
                             <input
@@ -151,7 +151,7 @@ function Payment() {
                                 className="p-label-checkout"
                                 style={{ color: "black" }}
                             >
-                                Address:
+                                Địa chỉ:
                             </label>
                             <br />
                             <input
@@ -164,7 +164,7 @@ function Payment() {
                     </div>
                 </div>
                 <div className="payment-method">
-                    <h4 className="payment-title">Payment method</h4>
+                    <h4 className="payment-title">Phương thức thanh toán</h4>
                     <form className="payment-method-body">
                         <div className="cash">
                             <label>
@@ -174,7 +174,7 @@ function Payment() {
                                     value="cash"
                                     onClick={checkProcessCash}
                                 />
-                                Cash
+                                Tiền mặt
                             </label>
                         </div>
                         <div className="payment-with-bank">
@@ -186,30 +186,30 @@ function Payment() {
                                     value="VNBANK"
                                     onChange={(e) => handleChange(e.target.value)}
                                 />
-                                Payment via ATM-Domestic bank account
+                                Thanh toán bằng thẻ ngân hàng
                             </label>
                         </div>
 
                     </form>
                     <div className="total-price-ship">
-                        <h4>Total order</h4>
+                        <h4>Tổng tiền</h4>
                         <div className="cart-subtotal">
-                            <div className='label-subtotal'><p>Subtotal:</p></div>
+                            <div className='label-subtotal'><p>Tổng</p></div>
                             <div className='subTotal'><p>${cart.totalPrice}</p></div>
                         </div>
                         <div className="cart-shipping">
-                            <div className='label-subtotal'><p>Shipping:</p></div>
+                            <div className='label-subtotal'><p>Tiền ship:</p></div>
                             <div className='subTotal'><p>$0</p></div>
                         </div>
                         <div className="cart-est-total">
-                            <div className='label-subtotal'><p>EST.TOTAL:</p></div>
+                            <div className='label-subtotal'><p>Ước tính tiền:</p></div>
                             <div className='subTotal'><p>${cart.totalPrice}</p></div>
                         </div>
                     </div>
 
                     <div className="payment-btn-checkout">
                         <button className='btnCheckout-detail' onClick={(e) => createOrder(e)}>
-                            CHECKOUT
+                            Xác nhận
                         </button>
                     </div>
 

@@ -7,11 +7,25 @@ import axios from "../../../API/AxiosConfig"
 import Popup from '../../utils/popup/Popup';
 import PopupConfirm from '../../utils/popup/PopupConfirm';
 function OrderItem({ order, isAdmin }) {
+    console.log(order);
     const [displayStatus, setDisplayStatus] = useState("")
-    const [status, setStatus] = useState("")
-    const [price, setPrice] = useState(0)
-    const [cartItem, setCartItem] = useState([])
+    const [status, setStatus] = useState(order.status)
     const [callback, setCallback] = useState(false)
+
+    useEffect(()=>{
+        setStatus(order.status)
+        if (order.status === "00") {
+            setDisplayStatus("Chờ xử lý")
+        } else if (order.status === "10") {
+            setDisplayStatus("Đã huỷ")
+        } else if (order.status === "01") {
+            setDisplayStatus("Đơn hàng đã bị huỷ")
+        } else if (order.status === "11") {
+            setDisplayStatus("Chờ nhận hàng")
+        }else if (order.status === "111") {
+            setDisplayStatus("Giao hàng thành công")
+        }
+    })
 
     // Chuyển đổi ngày tạo thành đối tượng Date
     const createdDate = new Date(order.createdAt);
@@ -25,21 +39,9 @@ function OrderItem({ order, isAdmin }) {
         const getOrderItem = async (e) => {
             try {
                 const res = await axios.get(`/orders/${order._id}`)
-                setPrice(res.data?.cart?.totalPrice)
-                setCartItem(res.data?.cart?.items)
-                console.log(cartItem)
+                order.status = res.data?.status
                 setStatus(res.data?.status)
-                if (res.data?.status === "00") {
-                    setDisplayStatus("Chờ xử lý")
-                } else if (res.data?.status === "10") {
-                    setDisplayStatus("Đã huỷ")
-                } else if (res.data?.status === "01") {
-                    setDisplayStatus("Đơn hàng đã bị huỷ")
-                } else if (res.data?.status === "11") {
-                    setDisplayStatus("Chờ nhận hàng")
-                }else if (res.data?.status === "111") {
-                    setDisplayStatus("Giao hàng thành công")
-                }
+
             } catch (e) {
                 alert(e.message)
             }
@@ -48,6 +50,7 @@ function OrderItem({ order, isAdmin }) {
 
     }, [callback])
 
+    
 
     const handelClick = () => {
         setIsCancel(true)
@@ -82,7 +85,7 @@ function OrderItem({ order, isAdmin }) {
                 </div>
             </div>}
             <div className='list-item-product-order'>
-                {cartItem?.map(item => {
+                {order?.cart?.items?.map(item => {
                     return <>
                         <div className="cart-item">
                             <div
@@ -116,7 +119,7 @@ function OrderItem({ order, isAdmin }) {
                 <div>
                     <div className="total-order">
                         <div className='label-total-order'><p>Tổng:</p></div>
-                        <div className='pricce-total-order'><p>${price}</p></div>
+                        <div className='pricce-total-order'><p>${order?.cart?.totalPrice}</p></div>
 
                     </div>
 

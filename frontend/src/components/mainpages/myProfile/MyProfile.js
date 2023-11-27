@@ -27,7 +27,7 @@ function MyProfile() {
     return (
         <div className="profile">
             <div className="profile-header">
-               <p> Manage profile information</p>
+               <p>Quản lý thông tin </p>
             </div>
             <div className="inf-password">
                 <div className="profile-information">
@@ -56,7 +56,7 @@ function MyProfile() {
                         onChange={(e) => onChangeInput("address", e.target.value)}
                     />
                     <div className="forget-password"  >
-                        Change Password
+                        Thay đổi mật khẩu
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@ function MyProfile() {
 
             <div className="style-btsave">
             <button className='btnSave' onClick={(e) => onClickSubmit(e)}>
-                SAVE
+                Lưu
             </button>
             </div>
         </div>
