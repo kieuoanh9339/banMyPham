@@ -19,11 +19,11 @@ function MyOrder() {
             } else {
                 console.log(process)
                 if (process) {
-                    const res = await axios.get(`/orders`)
+                    const res = await axios.get(`/orders?status=00`)
                     console.log(res)
                     setOrderByC(res.data)
                 } else {
-                    const res = await axios.get(`/orders?status=01`)
+                    const res = await axios.get(`/orders?status=01,10,11,111`)
                     console.log(res)
                     setOrderByC(res.data)
                 }
@@ -34,7 +34,8 @@ function MyOrder() {
     console.log(orderByC.reverse());
     return (
         <div className='parent-order' style={{ display: "flex", justifyContent: "space-around" }}>
-            <div className='menu-order' style={{ marginTop: "20px", display: "block", justifyContent: "left", }}>
+            {
+                isAdmin && <div className='menu-order' style={{ marginTop: "20px", display: "block", justifyContent: "left", }}>
                 <div className='menu-process-order' style={{ margin: "10px", cursor: "pointer",color: process ? 'red' :'black'}} onClick={() => setProcess(true)}>
                     Xử lý đơn hàng
                 </div>
@@ -42,6 +43,7 @@ function MyOrder() {
                     Danh sách đơn hàng
                 </div>
             </div>
+            }
             <div className='my-order'>
                 {
                     
