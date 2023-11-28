@@ -7,7 +7,7 @@ import axios from "../../../API/AxiosConfig"
 import Popup from '../../utils/popup/Popup';
 import PopupConfirm from '../../utils/popup/PopupConfirm';
 function OrderItem({ order, isAdmin }) {
-    console.log(order);
+
     const [displayStatus, setDisplayStatus] = useState("")
     const [status, setStatus] = useState(order.status)
     const [callback, setCallback] = useState(false)

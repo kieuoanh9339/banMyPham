@@ -55,7 +55,7 @@ function Register() {
                     <Input
                         type="text"
                         require={true}
-                        label="Fullname"
+                        label="Họ và tên"
                         value={user.fullname}
                         onChange={(e) => onChangeInput("fullname", e.target.value)}
                     />
@@ -65,7 +65,7 @@ function Register() {
                     <Input
                         type="text"
                         require={true}
-                        label="Phone Number"
+                        label="Số điện thoại"
                         value={user.phonenumber}
                         onChange={(e) => onChangeInput("phonenumber", e.target.value)}
                     />
@@ -76,7 +76,7 @@ function Register() {
                     <Input
                         type="text"
                         require={true}
-                        label="Address"
+                        label="Địa chỉ"
                         value={user.address}
                         onChange={(e) => onChangeInput("address", e.target.value)}
                     />
@@ -87,18 +87,18 @@ function Register() {
                     <Input
                         type="password"
                         require={true}
-                        label="Password"
+                        label="Mật khẩu"
                         value={user.password}
                         onChange={(e) => onChangeInput("password", e.target.value)}
                     />
                     <div className='error-email'><p>{pw}</p></div>
                 </div>
                 <div className='acc-re'>
-                    <div><p>Do you already have an account? </p></div>
-                    <div><Link to="/login" >Sign in</Link></div>
+                    <div><p>Tôi đã có tài khoản? </p></div>
+                    <div><Link to="/login" >Đăng nhập</Link></div>
                 </div>
                 <button className='btnLogin' onClick={(e) => onClickSubmit(e)}>
-                    REGISTER
+                    Đăng ký
                 </button>
             </div>
         </div>

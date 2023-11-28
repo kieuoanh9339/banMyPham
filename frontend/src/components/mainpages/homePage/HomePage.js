@@ -101,11 +101,17 @@ function HomePage() {
                 </div>
 
 
+                <div style={{display:"flex", alignItems:"center"}}>
                 <Link to="product">
                     <button className='btnFind' >
                         Tìm kiếm giải pháp
                     </button>
                 </Link>
+
+                <Link to="tip">
+                    <p style={{textDecorationLine:"none", fontSize: "14px", marginTop:"10px", marginLeft:"20px"}}>Tìm hiểu làn da!</p>
+                </Link>
+                </div>
 
             </div>
             <div className='title-new-product'>

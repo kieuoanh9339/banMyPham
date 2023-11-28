@@ -42,7 +42,7 @@ function Tip() {
                             <h1>Tìm hiểu loại da của bạn</h1>
                         </div>
                         <div className='desc-tip'>
-                            <i>Note:Rửa mặt sạch bằng sữa rửa mặt dịu nhẹ và đợi 15 – 30 phút. Nhấp vào biểu tượng phù hợp với những gì bạn nhìn thấy </i>
+                            <i>Note: Rửa mặt sạch bằng sữa rửa mặt dịu nhẹ và đợi 15 – 30 phút. Nhấp vào biểu tượng phù hợp với những gì bạn nhìn thấy </i>
                         </div>
                         <div className='type-skin'>
                             <div className='infor-skin' style={{border: dry?"2px solid":"none"}} onClick={() => {

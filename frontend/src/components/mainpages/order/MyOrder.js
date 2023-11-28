@@ -9,19 +9,20 @@ function MyOrder() {
     const [user, setUser] = state.userAPI.user
     const [orderByC, setOrderByC] = useState([])
     const [process, setProcess] = useState(true)
+    const [check, setCheck] = useState(false)
 
     useEffect(() => {
         const getOrders = async () => {
             if (isAdmin === false) {
                 const res = await axios.get(`orders/getOrder`)
-                console.log(res.data)
                 setOrderByC(res.data)
+
             } else {
                 console.log(process)
                 if (process) {
                     const res = await axios.get(`/orders?status=00`)
-                    console.log(res)
                     setOrderByC(res.data)
+
                 } else {
                     const res = await axios.get(`/orders?status=01,10,11,111`)
                     console.log(res)
@@ -36,24 +37,25 @@ function MyOrder() {
         <div className='parent-order' style={{ display: "flex", justifyContent: "space-around" }}>
             {
                 isAdmin && <div className='menu-order' style={{ marginTop: "20px", display: "block", justifyContent: "left", }}>
-                <div className='menu-process-order' style={{ margin: "10px", cursor: "pointer",color: process ? 'red' :'black'}} onClick={() => setProcess(true)}>
-                    Xử lý đơn hàng
+                    <div className='menu-process-order' style={{ margin: "10px", cursor: "pointer", color: process ? 'red' : 'black' }} onClick={() => setProcess(true)}>
+                        Xử lý đơn hàng
+                    </div>
+                    <div className='menu-list-order' style={{ margin: "10px", cursor: "pointer", color: process === false ? 'red' : 'black' }} onClick={() => setProcess(false)}>
+                        Danh sách đơn hàng
+                    </div>
                 </div>
-                <div className='menu-list-order' style={{ margin: "10px", cursor: "pointer",color: process===false ? 'red' :'black' }} onClick={() => setProcess(false)}>
-                    Danh sách đơn hàng
-                </div>
-            </div>
             }
             <div className='my-order'>
                 {
-                    
-                    orderByC?.reverse()?.map(order => {
-                        
+
+                    orderByC?.map(order => {
+
                         return <>
                             <OrderItem order={order} isAdmin={isAdmin} process={process} />
                         </>
                     })
                 }
+
 
 
 

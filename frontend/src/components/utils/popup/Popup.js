@@ -34,17 +34,17 @@ function Popup(props) {
           </div>
           <div class="popup-content">
             <p id="textPopup">
-              Are you sure want to cancel this order?
+             Bạn có chắc chắn huỷ đơn hàng này không?
             </p>
           </div>
         </div>
         <div class="popup-footer">
           <div className='cancel' >
-            <p onClick={checkCancel}>Cancel</p>
+            <p onClick={checkCancel}>Xác nhận</p>
           </div>
 
           <div className='success' >
-            <p onClick={checkClose}>Close</p>
+            <p onClick={checkClose}>Đóng</p>
           </div>
         </div>
       </div>

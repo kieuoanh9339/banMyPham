@@ -86,24 +86,24 @@ function Header() {
                                         {
                                             !isAdmin && <>
                                                 <div className='islogin' onClick={toggleDropdown} >
-                                                    <Link to="/my-account">Accout</Link>
+                                                    <Link to="/my-account">Tài khoản</Link>
                                                 </div>
                                                 <div className='islogin' onClick={toggleDropdown} >
-                                                    <Link to="/my-order">My order</Link>
+                                                    <Link to="/my-order">Đơn hàng</Link>
                                                 </div>
                                             </>
                                         }
                                         <div className='islogin' onClick={LogOut} >
-                                            <Link to="/">Logout</Link>
+                                            <Link to="/">Đăng xuất</Link>
                                         </div>
                                     </>
                                 ) : (
                                     <>
                                         <div className='islogin' onClick={toggleDropdown} >
-                                            <Link to="/login">Login</Link>
+                                            <Link to="/login">Đăng nhập</Link>
                                         </div>
                                         <div className='islogin' onClick={toggleDropdown} >
-                                            <Link to="/register">Register</Link>
+                                            <Link to="/register">Đăng ký</Link>
                                         </div>
                                     </>
                                 )}

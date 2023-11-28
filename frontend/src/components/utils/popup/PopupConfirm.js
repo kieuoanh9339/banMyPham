@@ -34,17 +34,17 @@ function PopupConfirm(props) {
           </div>
           <div class="popup-content">
             <p id="textPopup">
-              Are you sure want to confirm this order?
+             Bạn có xác nhận đã nhận hàng đơn hàng này không?
             </p>
           </div>
         </div>
         <div class="popup-footer">
           <div className='cancel' >
-            <p onClick={checkConfirm}>Confirm</p>
+            <p onClick={checkConfirm}>Xác nhận</p>
           </div>
 
           <div className='success' >
-            <p onClick={checkClose}>Close</p>
+            <p onClick={checkClose}>Đóng</p>
           </div>
         </div>
       </div>

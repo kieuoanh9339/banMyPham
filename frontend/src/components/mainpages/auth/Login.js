@@ -49,7 +49,7 @@ function Login() {
                     <Input
                         type="password"
                         require={true}
-                        label="Password"
+                        label="Mật khẩu"
                         value={user.password}
                         onChange={(e) => onChangeInput("password", e.target.value)}
                     />
@@ -57,11 +57,11 @@ function Login() {
                 </div>
 
                 <div className='acc-re'>
-                    <div><p>Do not have an account? </p></div>
-                    <div><Link to="/register" >Sign up</Link></div>
+                    <div><p>Bạn chưa có tài khoàn? </p></div>
+                    <div><Link to="/register" >Đăng ký</Link></div>
                 </div>
                 <button className='btnLogin' onClick={(e) => onClickSubmit(e)}>
-                    LOGIN
+                    Đăng nhập
                 </button>
             </div>
         </div>
