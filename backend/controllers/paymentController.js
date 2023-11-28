@@ -11,7 +11,7 @@ const paymentController = {
         var tmnCode = "9KTXV34S";
         var secretKey = "LSNHVMPQPGMJKAGHKVVIBDLHVHNXFFFV";
         var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        var returnUrl = "http://localhost:3000/checkout"
+        var returnUrl = "https://ban-my-pham.vercel.app/checkout"
 
         var date = new Date();
         let createDate = moment(date).format('YYYYMMDDHHmmss');
