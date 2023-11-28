@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "../API/AxiosConfig"
-import { set } from "mongoose"
+
 
 function CategoryAPI() {
     const [category, setCategory] = useState([])
