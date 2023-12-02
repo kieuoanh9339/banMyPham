@@ -3,10 +3,6 @@ import Dry from "./img/1_Dry.avif"
 import Oily from "./img/1_Oily.avif"
 import Normal from "./img/1_Normal.avif"
 import Combo from "./img/1_Combo.avif"
-import Acne from "./img/acne.avif"
-import Aging from "./img/aging.avif"
-import Uneven from "./img/uneven.avif"
-import Sensitive from "./img/sensitive.avif"
 import "./Tip.css"
 import axios from '../../../API/AxiosConfig'
 import { GlobalState } from '../../../GlobalState'
