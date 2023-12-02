@@ -80,7 +80,7 @@ function Tip() {
                                 </div >
                             </div>
                             <div className='infor-skin' style={{border: combo?"2px solid":"none"}} onClick={() => {
-                                setDisplay("Da của bạn là da hỗn hợp. Loại da siêu phổ biến này xảy ra khi một số bộ phận trên khuôn mặt tiết ra quá nhiều bã nhờn (chất sáp giữ ẩm cho da) và các bộ phận khác không sản xuất đủ. Với sự kết hợp phù hợp giữa các thành phần và công thức, bạn có thể có làn da khỏe mạnh, cân bằng hơn.")
+                                setDisplay("Da của bạn là da thường. Xin chúc mừng, bạn đã trúng số độc đắc về mặt di truyền! Loại da hiếm gặp này có tỷ lệ dầu-nước phù hợp, giữ cho da mịn màng, trong trẻo và cân bằng hoàn hảo. Bảo vệ và phòng ngừa là chìa khóa để giữ mọi thứ ở trạng thái trung tính tự nhiên.")
                                 setSkinType("Da thường")
                                 setClick(true)
                                 setDry(false)
@@ -97,7 +97,7 @@ function Tip() {
                                 </div>
                             </div>
                             <div className='infor-skin' style={{border: normal?"2px solid":"none"}} onClick={() => {
-                                setDisplay("Da của bạn là da thường. Xin chúc mừng, bạn đã trúng số độc đắc về mặt di truyền! Loại da hiếm gặp này có tỷ lệ dầu-nước phù hợp, giữ cho da mịn màng, trong trẻo và cân bằng hoàn hảo. Bảo vệ và phòng ngừa là chìa khóa để giữ mọi thứ ở trạng thái trung tính tự nhiên.")
+                                setDisplay("Da của bạn là da hỗn hợp. Loại da siêu phổ biến này xảy ra khi một số bộ phận trên khuôn mặt tiết ra quá nhiều bã nhờn (chất sáp giữ ẩm cho da) và các bộ phận khác không sản xuất đủ. Với sự kết hợp phù hợp giữa các thành phần và công thức, bạn có thể có làn da khỏe mạnh, cân bằng hơn.")
                                 setSkinType("Da hỗn hợp")
                                 setClick(true)
                                 setDry(false)
