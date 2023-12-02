@@ -2,6 +2,7 @@ import axios from "axios";
 const AxiosConfig = axios.create({
   
   baseURL: "https://ban-my-pham-7c6l.vercel.app/api",
+  // baseURL: "http://localhost:5000/api",
   headers: {
     "Access-Control-Allow-Origin": "*",
     Authorization: localStorage.getItem("token")
